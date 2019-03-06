@@ -1,0 +1,75 @@
+curl "https://www.yoursex.ru/" -H "Connection: keep-alive" -H "Upgrade-Insecure-Requests: 1" -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.96 Safari/537.36" -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8" -H "Accept-Encoding: gzip, deflate, br" -H "Accept-Language: en-US,en;q=0.9,ru;q=0.8,uk;q=0.7" --compressed
+
+(X)(X)
+
+curl "https://www.yoursex.ru/index.php?act=Login^&CODE=00" -H "Connection: keep-alive" -H "Upgrade-Insecure-Requests: 1" -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.96 Safari/537.36" -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8" -H "Referer: https://www.yoursex.ru/" -H "Accept-Encoding: gzip, deflate, br" -H "Accept-Language: en-US,en;q=0.9,ru;q=0.8,uk;q=0.7" -H "Cookie: _ym_uid=1549737566575282686; _ym_d=1549737566; _ym_visorc_13872469=w; _ym_isad=2; ipb_stronghold=fa977ab61ae1debc5f1170697ee38c85; coppa=0; session_id=a1e10f59d43c8c7b68dbd30e33c85125; member_id=0; pass_hash=0; anonlogin=-1" --compressed
+
+
+(X)(X)
+https://www.yoursex.ru/index.php?act=Login&CODE=01
+POST /index.php?act=Login&CODE=01 HTTP/1.1
+Host: www.yoursex.ru
+Connection: keep-alive
+Content-Length: 85
+Cache-Control: max-age=0
+Origin: https://www.yoursex.ru
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+Referer: https://www.yoursex.ru/index.php?act=Login&CODE=00
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.9,ru;q=0.8,uk;q=0.7
+Cookie: session_id=896406e9b0ed43ad31c86d38358c1a14; _ym_uid=1550619482935446127; _ym_d=1550619482; _ym_isad=2
+
+PL - referer=https%3A%2F%2Fwww.yoursex.ru%2F&UserName=Lira98&PassWord=rambler&CookieDate=1
+
+(X)(X)
+
+HTTP/1.1 200 OK
+Server: nginx/1.14.0
+Date: Sun, 24 Feb 2019 00:00:53 GMT
+Content-Type: text/html;charset=windows-1251
+Transfer-Encoding: chunked
+Connection: keep-alive
+X-Powered-By: PHP/7.2.9
+Set-Cookie: topicsread=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; Max-Age=0; path=/
+Set-Cookie: pass_hash=0fdfb6db8b99c9bd34397a1cbfe39441; expires=Sun, 03-Mar-2019 00:00:52 GMT; Max-Age=604800; path=/; HttpOnly
+Set-Cookie: session_id=1b125f2e8f1b4ce636329494ccbb79f2; path=/; HttpOnly
+Cache-Control: no-cache, must-revalidate, max-age=0
+Expires: 0
+Pragma: no-cache
+Vary: Accept-Encoding
+Strict-Transport-Security: max-age=31536000;
+
+(X)(X)
+
+GET /znakomstva.html?want=1&af=18&at=50&some_age=1&city_id=city-740&for=0 HTTP/1.1
+Host: www.yoursex.ru
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+Referer: https://www.yoursex.ru/znakomstva.html
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.9,ru;q=0.8,uk;q=0.7
+Cookie: _ym_uid=1550925698943841587; _ym_d=1550925698; _ym_isad=2; PHPSESSID=bm38baae13l1ku1tuf7q0d5i77; coppa=0; anonlogin=-1; eighteen_banner=1; _translate=1; _guid=8DA148A9-C07D-26B2-D74B-31B45872D232; _user_lang=en; _gender=1; _key=f96ee53c9153294609f2c6cb2fe9deab510f773e~acb6f3b9ffbc7ee5f102645c890673e5d0f8c927~072dfecbe432b27f3c680d070bd9812d; ipb_stronghold=4e994940f00db6a9e4de6d737e8a5d3b; member_id=171958; pass_hash=0fdfb6db8b99c9bd34397a1cbfe39441; session_id=1b125f2e8f1b4ce636329494ccbb79f2; _ym_visorc_13872469=w
+
+PL - want=1&af=18&at=50&some_age=1&city_id=city-740&for=0
+
+https://www.yoursex.ru/id174004
+
+POST /index.php?s=&act=xmlout&do=load-anks-search&anks=24&want=1&af=18&at=50&city_id=city-4400&for=0&some_city=&sponsor=&some_sex=&some_age=1&order_asc=&has_ad=&has_avatar=&has_sig=&has_want= HTTP/1.1
+Host: www.yoursex.ru
+Connection: keep-alive
+Content-Length: 173
+Origin: https://www.yoursex.ru
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36
+Content-Type: application/x-www-form-urlencoded
+Accept: */*
+Referer: https://www.yoursex.ru/znakomstva.html?want=1&af=18&at=50&some_age=1&city_id=city-4400&for=0
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.9,ru;q=0.8,uk;q=0.7
+Cookie: session_id=b3f767458266a2a8b0a0fad96ddfb76c; _ym_uid=15510479994741253; _ym_d=1551047999; _ym_visorc_13872469=w; _ym_isad=2; ipb_stronghold=4e994940f00db6a9e4de6d737e8a5d3b; member_id=171958; pass_hash=0fdfb6db8b99c9bd34397a1cbfe39441; coppa=0
+
+https://www.yoursex.ru/index.php?s=&act=xmlout&do=load-anks-search&anks=24&want=1&af=18&at=50&city_id=city-4400&for=0&some_city=&sponsor=&some_sex=&some_age=1&order_asc=&has_ad=&has_avatar=&has_sig=&has_want=
