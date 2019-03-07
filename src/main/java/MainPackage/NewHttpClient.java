@@ -1,12 +1,15 @@
 package MainPackage;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpConnection;
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
+import org.apache.http.client.CookieStore;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicHeader;
@@ -28,6 +31,7 @@ public class NewHttpClient {
     private static final String[] INITIAL_HEADERS = {"Origin: https://www.yoursex.ru", "Referer: https://www.yoursex.ru/", "Connection: keep-alive", "Upgrade-Insecure-Requests: 1", "User-Agent: Mozilla/5.0",
             "Accept: text/html"};
     private static List<BasicHeader> HEADERS = new ArrayList<>();
+    private CookieStore cookieStore = new BasicCookieStore();
     private String userName;
     private String password;
     private String myID;
@@ -38,7 +42,10 @@ public class NewHttpClient {
         LOGIN_PAGE("https://www.yoursex.ru/index.php?act=Login&CODE=00"),
         LOGIN_USER("https://www.yoursex.ru/index.php?act=Login&CODE=01"),
         LOGGED_IN("https://www.yoursex.ru/index.php?&CODE=00"),
-        ID_LIST("https://www.yoursex.ru/znakomstva.html");
+        ID_LIST("https://www.yoursex.ru/znakomstva.html"),
+        FIRST_BATCH_ID_LIST("https://www.yoursex.ru/znakomstva.html"),
+        MESSAGES("https://www.yoursex.ru/messages.html"),
+        SEND_MESSAGE("https://www.yoursex.ru/index.php");
 
         private String URL;
 
@@ -64,60 +71,86 @@ public class NewHttpClient {
     }
 
     void run() {
-        try (CloseableHttpClient httpClient = HttpClients.custom().setDefaultHeaders(HEADERS).build()) {
+        try (CloseableHttpClient httpClient = HttpClients.custom().setDefaultHeaders(HEADERS).setDefaultCookieStore(cookieStore).build()) {
             String queryParam;
-            get(HOME.getURL(), HOME.toString(), httpClient);
+            get(HOME.getURL(), HOME, httpClient);
             Thread.sleep(500);
-            get(LOGIN_PAGE.getURL(), LOGIN_PAGE.toString(), httpClient);
+            get(LOGIN_PAGE.getURL(), LOGIN_PAGE, httpClient);
             Thread.sleep(500);
-            post(LOGIN_USER.getURL(), LOGIN_USER.toString(), loginLoad(), httpClient);
+            post(LOGIN_USER.getURL(), LOGIN_USER, loginLoad(), httpClient);
             Thread.sleep(500);
-            String response = get(LOGIN_USER.getURL(), LOGIN_USER.toString(), httpClient);
+            String response = get(LOGIN_USER.getURL(), LOGIN_USER, httpClient);
             if (response.contains("<div id=\"userlinks\">")) {
                 System.out.println("SUCCESSFUL");
             } else System.out.println("FAILURE");
 
             extractIDs(response, false, true);
 
-            System.out.println("HORSE" + myID);
             Thread.sleep(500);
             queryParam = "?want=1&af=18&at=50&some_age=1&city_id=city-4400&for=0";
-            response = get(ID_LIST.getURL() + queryParam, "FirstBatch" + ID_LIST.toString(), httpClient);
+            response = get(ID_LIST.getURL() + queryParam, FIRST_BATCH_ID_LIST, httpClient);
             extractIDs(response, true, false);
             Thread.sleep(500);
+            get(MESSAGES.getURL(), MESSAGES, httpClient);
+            Thread.sleep(500);
+            queryParam = "?act=xmlout&do=add-dialog-message&PHPSESSID=%s&JsHttpRequest=%s-form";
+            sendMessage(HOME.getURL(), SEND_MESSAGE, queryParam, httpClient);
             queryParam = "?want=1&af=18&at=50&some_age=1&city_id=city-4400&for=0";
-            response = post(HOME.getURL() + queryParam, ID_LIST.toString(), idLoad("",""), httpClient);
+
+            /*response = post(HOME.getURL() + queryParam, ID_LIST.toString(), idLoad("",""), httpClient);
             extractIDs(response, false, false);
             for (int i = 48;i<1000;i=i+24){
                 response = post(HOME.getURL() + queryParam, ID_LIST.toString(), idLoad("anks",String.valueOf(i)), httpClient);
                 extractIDs(response,false,false);
-            }
+            }*/
             System.out.println(idSet.size());
-            idSet.forEach(System.out::println);
+            // idSet.forEach(System.out::println);
         } catch (Exception e) {
             System.err.println(e);
         }
     }
 
-    private String get(String url, String stage, CloseableHttpClient httpClient) throws Exception {
+    private String get(String url, Stages stage, CloseableHttpClient httpClient) throws Exception {
         String entityString;
         HttpGet httpGet = new HttpGet(url);
+
         try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
-            System.out.println(response.getStatusLine());
+            //System.out.println(response.getStatusLine());
             HttpEntity entity = response.getEntity();
             entityString = IOUtils.toString(entity.getContent(), "Windows-1251");
-            System.out.println(response.toString());
+            //printHeaders(response.getAllHeaders());
             writeFile(entityString, stage);
+
 
             EntityUtils.consume(entity);
         }
         return entityString;
     }
 
-    private void sendMessage(HttpConnection connection) {
-        HttpPost post = new HttpPost();
+    //act=xmlout&do=add-dialog-message&PHPSESSID=id294htrgrb149895lq45i8ars&JsHttpRequest=1551924615972419-form
+    private String sendMessage(String url, Stages stage, String payLoad, CloseableHttpClient client) throws Exception {
+        String phpSID = cookieStore.getCookies().stream().filter(c -> c.getName().equalsIgnoreCase("PHPSESSID")).findAny().get().getValue();
+        String load = String.format(payLoad, phpSID, String.valueOf(System.currentTimeMillis()));
+        HttpPost post = new HttpPost(url + load);
+        String entityString;
+        HttpEntity entity = MultipartEntityBuilder.create()
+                .addBinaryBody("q", new byte[]{})
+                .addTextBody("to", "174004")
+                .addTextBody("post", "hello").build();
+        post.setEntity(entity);
+        EntityUtils.consume(entity);
+        try (CloseableHttpResponse response = client.execute(post)) {
+            System.out.println(response.getStatusLine());
+            HttpEntity responseEntity = response.getEntity();
+            entityString = IOUtils.toString(responseEntity.getContent(), "Windows-1251");
+            writeFile(entityString, stage);
+            EntityUtils.consume(responseEntity);
+        }
+        return entityString;
+
     }
-    private String post(String url, String stage, List<BasicNameValuePair> params, CloseableHttpClient httpClient) throws Exception {
+
+    private String post(String url, Stages stage, List<BasicNameValuePair> params, CloseableHttpClient httpClient) throws Exception {
         HttpPost httpPost = new HttpPost(url);
         String entityString;
 
@@ -125,10 +158,9 @@ public class NewHttpClient {
         httpPost.setEntity(new UrlEncodedFormEntity(params));
 
         try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
-            System.out.println(response.getStatusLine());
+            //System.out.println(response.getStatusLine());
             HttpEntity entity = response.getEntity();
             entityString = IOUtils.toString(entity.getContent(), "Windows-1251");
-            System.out.println(response.toString());
             writeFile(entityString, stage);
             EntityUtils.consume(entity);
         }
@@ -164,7 +196,7 @@ public class NewHttpClient {
         map.put("has_avatar", "");
         map.put("has_sig", "");
         map.put("has_want", "");
-        if (key!=null&&value!=null) {
+        if (key != null && value != null) {
             map.put(key, value);
         }
         List<BasicNameValuePair> idLoad = new ArrayList<>();
@@ -182,8 +214,8 @@ public class NewHttpClient {
                 .map(s -> s.split("=")).map(s -> new BasicNameValuePair(s[0], s[1])).collect(Collectors.toList());
     }
 
-    private void writeFile(String response, String fileName) throws Exception {
-        Files.write(Paths.get(fileName), response.getBytes(Charset.forName("Windows-1251")), StandardOpenOption.CREATE);
+    private void writeFile(String response, Stages fileName) throws Exception {
+        Files.write(Paths.get(fileName.toString()), response.getBytes(Charset.forName("Windows-1251")), StandardOpenOption.CREATE);
 
     }
 
@@ -209,5 +241,9 @@ public class NewHttpClient {
                 idSet.add(Integer.parseInt(matcher.group().replace("id", "")));
             }
         }
+    }
+
+    private void printHeaders(Header[] headers) {
+        Arrays.stream(headers).forEach(h -> System.out.println(h.getName() + "___________" + h.getValue()));
     }
 }
