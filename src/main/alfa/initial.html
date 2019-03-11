@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<!-- saved from url=(0109)http://localhost:63342/AnotherBot/MyBot.AnotherBot/src/main/alfa/initial.html?_ijt=h5q1f05j3v1nc050sm8de1l599 -->
+<html lang="ru" class="gr__localhost"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+    <title>Alfa Portal</title>
+    
+    <meta name="viewport" content="user-scalable=yes, maximum-scale=2, minimum-scale=0.5, width=device-width">
+
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./initial_files/styles.css">
+
+</head>
+<body ontouchstart="" data-gr-c-s-loaded="true">
+
+
+
+
+
+<script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-111619831-2');
+        </script>
+<div class="container">
+    <a href="https://alfabank.ru/"><img class="bank-logo" src="./initial_files/bank-logo.png"></a>
+    <h1 class="title">Переводы с карты на карту</h1>
+    <form id="form" data-role="form" action="http://localhost:63342/AnotherBot/MyBot.AnotherBot/src/main/alfa/initial.html" method="post">
+        <input id="partner_name" type="hidden" value="alfaportal">
+        <select class="meta-item hide" data-role="mm" name="tfr_card_src_exp_month">
+            <option>01</option>
+            <option>02</option>
+            <option>03</option>
+            <option>04</option>
+            <option>05</option>
+            <option>06</option>
+            <option>07</option>
+            <option>08</option>
+            <option>09</option>
+            <option>10</option>
+            <option>11</option>
+            <option>12</option>
+        </select>
+        <select class="meta-item hide" data-role="yyyy" name="tfr_card_src_exp_year">
+            <option>2019</option>
+            <option>2020</option>
+            <option>2021</option>
+            <option>2022</option>
+            <option>2023</option>
+            <option>2024</option>
+            <option>2025</option>
+            <option>2026</option>
+            <option>2027</option>
+            <option>2028</option>
+            <option>2029</option>
+        </select>
+        <div class="hide" data-role="selectCurrencyHolder">
+            <select name="tfr_currency" data-role="currencySelect">
+                <option selected="selected" value="810">RUR</option>
+            </select>
+        </div>
+        <div class="card-container">
+            <div class="f-left">
+                <div class="c-container control card m-left" data-role="card">
+                    <div class="card-bank-logo"></div>
+                    <div class="payment-system-container">
+                        <div>
+                            <span class="payment-system MIR" data-role="cardLogo mir"></span>
+                            <span class="payment-system Maestro" data-role="cardLogo maestro"></span>
+                            <span class="payment-system MasterCard" data-role="cardLogo mastercard"></span>
+                            <span class="payment-system Visa" data-role="cardLogo visa"></span>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <div class="input-container">
+                        <div class="card-number-input">
+                            <input data-role="fullNumber senderFullNumber" name="tfr_card_src_num" maxlength="19" autocomplete="off" type="hidden" value="">
+                            <span class="card-number-info info hide">Номер карты</span>
+                            <input class="card-number card-number-Sender " placeholder="Номер карты" data-tooltip="0000 0000 0000 0000" novalidate="" data-role="numberFullSender senderNumber" autocomplete="off" type="tel" data-mask="">
+                        </div>
+                        <div class="date-input">
+                            <span class="date-info info hide">ММ/ГГ</span>
+                            <input data-role="senderDate" data-tooltip="00/00" novalidate="" type="tel" class="date " placeholder="ММ/ГГ">
+                        </div>
+                        <div class="cvc-input" data-role="codeScope">
+                            <span class="cvc-info info hide">CVC</span>
+                            <input type="password" maxlength="3" data-role="code" data-tooltip="000" novalidate="" name="tfr_card_cvv" value="" autocomplete="off" class="cvc" placeholder="CVC">
+                        </div>
+                    </div>
+                    <div class="focus-box-shadow hide"></div>
+                </div>
+                <div class="cardsInfo" id="personalData" style="display: none">
+                    <div class="c-container control f-left m-left">
+                        <span class="info hide">Фамилия</span>
+                        <input data-role="forInternational surname" placeholder="Фамилия" type="text" class="field" value="" name="tfr_surname" maxlength="24">
+                        <span class="info hide">Имя</span>
+                        <input data-role="forInternational name" placeholder="Имя" type="text" class="field" value="" name="tfr_name" maxlength="24">
+                        <span class="info hide">Отчество</span>
+                        <input data-role="forInternational middlename" placeholder="Отчество" type="text" class="field" value="" name="tfr_middlename" maxlength="24">
+                        <span class="info">Страна</span>
+                        <div class="ik_select" style="position: relative;"><div class="ik_select_link ik_select_link_novalue"><div class="ik_select_link_text"></div></div><div class="ik_select_dropdown" style="position: absolute; z-index: 9998; width: 100%; display: none;"><div class="ik_select_list" style="position: relative;"><div class="ik_select_list_inner" style="height: auto;"><ul></ul></div></div></div><select name="tfr_country" id="countrySelect" data-role="select country forInternational" style="position: absolute; margin: 0px; padding: 0px; top: 0px; left: -9999px;">
+                        </select></div>
+                        <span class="info hide">Город</span>
+                        <input data-role="city forInternational" placeholder="Город" type="text" class="field" value="" name="tfr_city" maxlength="25">
+                        <span class="info hide">Улица, дом</span>
+                        <input data-role="street forInternational" placeholder="Улица, дом" type="text" class="field" value="" name="tfr_street" maxlength="50">
+                        <span class="info hide">Индекс</span>
+                        <input data-role="index forInternational" placeholder="Индекс" type="text" class="field" value="" name="tfr_addr_index" maxlength="15">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="f-right">
+                
+                <div class="cardsInfo" id="recipientData" style="display: none">
+                    <div class="c-container control f-right m-right">
+                        <span class="info hide">Фамилия</span>
+                        <input data-role="forInternational surname" placeholder="Фамилия" type="text" class="field" value="" name="tfr_surname_recipient" maxlength="24">
+                        <span class="info hide">Имя</span>
+                        <input data-role="forInternational name" placeholder="Имя" type="text" class="field" value="" name="tfr_name_recipient" maxlength="24">
+                        <span class="info hide">Отчество</span>
+                        <input data-role="forInternational middlename" placeholder="Отчество" type="text" class="field" value="" name="tfr_middlename_recipient" maxlength="24">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="title error-message">
+            <div class="error" data-error="senderDate">Неправильный срок действия карты отправителя</div>
+            <div class="error" data-error="senderNumber">Неправильный номер карты отправителя</div>
+            <div class="error" data-error="recipientNumber">Неправильный номер карты получателя</div>
+            <div class="error" data-error="code">CVC2 / CVV2 обязателен для данной карты отправителя</div>
+            <div class="error" data-error="sum">Сумма должна быть больше 0</div>
+
+        </div>
+        <h2 class="title">Сумма перевода</h2>
+        <div class="amount-input">
+            <input type="text" class="hide" data-role="sum" data-mask="price maxlength:9" value="" name="tfr_amount" novalidate="" autocomplete="off">
+            <input type="text" class="amount " data-role="sumMask" placeholder="0" value="" novalidate="" autocomplete="off">
+            <div class="currency rub active">
+                <i class="fa fa-rub" aria-hidden="true"></i>
+            </div>
+            <div class="currency eur hide">
+                <i class="fa fa-eur" aria-hidden="true"></i>
+            </div>
+            <div class="currency dollar hide">
+                <i class="fa fa-dollar" aria-hidden="true"></i>
+            </div>
+        </div>
+        <div class="comission">
+            <span class="hide">Комиссия — </span>
+            <span class="hide" data-role="commissionAmmount">0.00</span>
+            <span class="hide" data-role="commissionCurrency">
+                        <i class="fa fa-rub" aria-hidden="true"></i>
+                        <i class="fa fa-eur hide" aria-hidden="true"></i>
+                        <i class="fa fa-dollar hide" aria-hidden="true"></i>
+                    </span>
+        </div>
+        <input type="hidden" name="ssn_token" value="1552263820866">
+        <button type="submit" class="send-button button" data-role="submit" name="action_proceed" >
+            Отправить
+        </button>
+    </form>
+    <div class="agreement">Нажимая «Отправить» соглашаюсь<br>на <a target="_blank" href="https://alfabank.ru/f/3/everyday/cardtocard/oferta_p2p.pdf" class="agreement">условия переводов</a></div>
+    <div class="agreement oldalfa" style="text-align: center;"><a href="https://www.alfaportal.ru/card2card/ptpl/alfaportalold/initial.html" class="oldalfa" align="center">Использовать старую версию Альфа Портала</a></div>
+    <div class="additional-info">
+        <p>С лимитами на осуществление переводов с карты на карту можно ознакомится на <a href="https://alfabank.ru/everyday/cardtocard/" class="agreement">сайте АО «Альфа-Банк»</a>.
+            Переводы по России - в рублях РФ, международные - в рублях или долларах США или Евро.</p>
+        <p>Банки-эмитенты карт могут устанавливать дополнительные условия и ограничения для проведения переводов с карты на карту. Переводы с кредитных карт Альфа-Банка разрешены.</p>
+        <p>Зачисление на карты Альфа-Банка (Россия, Украина (Visa), Беларусь, Казахстан) - моментально, на карты других банков - зависит от банка получателя: от нескольких минут до нескольких дней.</p>
+
+    </div>
+    <img src="./initial_files/payment-systems.png" class="payment-systems">
+    <div class="license">АО «Альфа-Банк» Генеральная лицензия ЦБ РФ №1326</div>
+</div>
+<script src="./initial_files/bundle.js.download"></script>
+
+
+</body></html>
