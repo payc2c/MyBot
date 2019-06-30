@@ -18,6 +18,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -78,7 +79,7 @@ public class NewHttpClient {
     private void readIDs() throws Exception {
         Path p = Paths.get(ID_SET.toString());
         if (Files.exists(p)) {
-            String ids = new String(Files.readAllBytes(p), "UTF-8");
+            String ids = new String(Files.readAllBytes(p), StandardCharsets.UTF_8);
             ids = ids.substring(1, ids.length() - 1);
             idSet = Arrays.stream(ids.split(",")).map(s -> Integer.parseInt(s.trim())).collect(Collectors.toSet());
             System.out.println(idSet);
@@ -86,7 +87,7 @@ public class NewHttpClient {
     }
 
     void run() throws Exception {
-        readIDs();
+       // readIDs();
         try (CloseableHttpClient httpClient = HttpClients.custom().setDefaultHeaders(HEADERS).setDefaultCookieStore(cookieStore).build()) {
             String queryParam;
             get(HOME.getURL(), HOME, httpClient);
@@ -117,19 +118,18 @@ public class NewHttpClient {
             response = post(HOME.getURL() + queryParam, ID_LIST, idLoad("", ""), httpClient);
             extractIDs(response, false, false);
             int max = 10000;
-          /*  try {
+            try {
                 for (int i = 48; i < max; i = i + 24) {
                     response = post(HOME.getURL() + queryParam, ID_LIST, idLoad("anks", String.valueOf(i)), httpClient);
                     extractIDs(response, false, false);
-                    System.out.println(idSet.size() + "/" + max);
-
+                    System.out.println();
                 }
 
             } catch (Exception e) {
                 throw new Exception(e);
             } finally {
                 writeFile(idSet.toString(), ID_SET);
-            }*/
+            }
             queryParam = "?act=xmlout&do=add-dialog-message&PHPSESSID=%s&JsHttpRequest=%s-form";
             System.out.println(idSet.size());
             sendMessage(HOME.getURL(), SEND_MESSAGE, queryParam, httpClient);
@@ -278,7 +278,7 @@ public class NewHttpClient {
 
     private void extractIDs(String response, boolean isFirstBatch, boolean isMyId) {
         if (isFirstBatch) {
-            response = response.substring(response.indexOf("'single_ank'", 0));
+            response = response.substring(response.indexOf("'single_ank'"));
         }
         Pattern pat = Pattern.compile("id\\d{4,}");
         Matcher matcher = pat.matcher(response);

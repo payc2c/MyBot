@@ -191,7 +191,7 @@ public class Main {
 
 
     public static void main(String[] args) throws Exception {
-        String username = "adgszc@smart-mail.info";
+        String username = "yolicex@click-email.com";
         String password = "123123123gf";
         NewHttpClient client = new NewHttpClient(username, password);
         client.run();
