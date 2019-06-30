@@ -1,0 +1,1465 @@
+{
+  "property_id": "17311233",
+  "name": "Holiday Inn Express Yingkou Onelong Plaza",
+  "address": {
+    "line_1": "Onelong Plaza, West Kunlun",
+    "line_2": "North Dingtun Road, Bayuquan",
+    "city": "Yingkou",
+    "state_province_name": "Liaoning",
+    "postal_code": "115009",
+    "country_code": "CN"
+  },
+  "ratings": {
+    "property": {
+      "rating": "3.5",
+      "type": "Star"
+    }
+  },
+  "location": {
+    "coordinates": {
+      "latitude": 40.271913,
+      "longitude": 122.128912
+    }
+  },
+  "phone": "86-417-6189888",
+  "fax": "86-417-6189777",
+  "category": {
+    "id": 1,
+    "name": "Hotel"
+  },
+  "rank": 213389,
+  "business_model": {
+    "expedia_collect": true,
+    "property_collect": true
+  },
+  "checkin": {
+    "begin_time": "2:00 PM",
+    "instructions": "Extra-person charges may apply and vary depending on property policy. <br />Government-issued photo identification and a credit card, debit card, or cash deposit are required at check-in for incidental charges. <br />Special requests are subject to availability upon check-in and may incur additional charges. Special requests cannot be guaranteed. <ul>  </ul>",
+    "min_age": "16"
+  },
+  "checkout": {
+    "time": "12:00 PM"
+  },
+  "policies": {
+    "know_before_you_go": "<ul>  <li>The property has connecting/adjoining rooms, which are subject to availability and can be requested by contacting the property using the number on the booking confirmation. </li> </ul>"
+  },
+  "attributes": {
+    "pets": {
+      "2050": {
+        "id": 2050,
+        "name": "Pets not allowed"
+      }
+    }
+  },
+  "amenities": {
+    "2001": {
+      "id": 2001,
+      "name": "Free breakfast"
+    },
+    "369": {
+      "id": 369,
+      "name": "Laundry facilities"
+    },
+    "2131": {
+      "id": 2131,
+      "name": "Meeting rooms"
+    },
+    "19": {
+      "id": 19,
+      "name": "Restaurant"
+    },
+    "3861": {
+      "id": 3861,
+      "name": "Free self parking"
+    },
+    "2390": {
+      "id": 2390,
+      "name": "Free WiFi"
+    },
+    "2423": {
+      "id": 2423,
+      "name": "In-room accessibility"
+    },
+    "2349": {
+      "id": 2349,
+      "name": "Designated smoking areas"
+    },
+    "1073744110": {
+      "id": 1073744110,
+      "name": "Ballroom"
+    }
+  },
+  "images": [
+    {
+      "caption": "Featured Image",
+      "hero_image": true,
+      "category": 3,
+      "links": {
+        "350px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/d792e2ad_b.jpg"
+        },
+        "70px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/d792e2ad_t.jpg"
+        },
+        "1000px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/d792e2ad_z.jpg"
+        }
+      }
+    },
+    {
+      "caption": "Lobby",
+      "hero_image": false,
+      "category": 10001,
+      "links": {
+        "350px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/23126caf_b.jpg"
+        },
+        "70px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/23126caf_t.jpg"
+        },
+        "1000px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/23126caf_z.jpg"
+        }
+      }
+    },
+    {
+      "caption": "Lobby",
+      "hero_image": false,
+      "category": 10001,
+      "links": {
+        "350px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/2dba991b_b.jpg"
+        },
+        "70px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/2dba991b_t.jpg"
+        },
+        "1000px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/2dba991b_z.jpg"
+        }
+      }
+    },
+    {
+      "caption": "Lobby",
+      "hero_image": false,
+      "category": 10001,
+      "links": {
+        "350px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/98dc9295_b.jpg"
+        },
+        "70px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/98dc9295_t.jpg"
+        },
+        "1000px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/98dc9295_z.jpg"
+        }
+      }
+    },
+    {
+      "caption": "Lobby",
+      "hero_image": false,
+      "category": 10001,
+      "links": {
+        "350px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/fdfacd50_b.jpg"
+        },
+        "70px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/fdfacd50_t.jpg"
+        },
+        "1000px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/fdfacd50_z.jpg"
+        }
+      }
+    },
+    {
+      "caption": "Lobby Sitting Area",
+      "hero_image": false,
+      "category": 10003,
+      "links": {
+        "350px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/dc8d9975_b.jpg"
+        },
+        "70px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/dc8d9975_t.jpg"
+        },
+        "1000px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/dc8d9975_z.jpg"
+        }
+      }
+    },
+    {
+      "caption": "Lobby Lounge",
+      "hero_image": false,
+      "category": 10006,
+      "links": {
+        "350px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/08d1bfbc_b.jpg"
+        },
+        "70px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/08d1bfbc_t.jpg"
+        },
+        "1000px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/08d1bfbc_z.jpg"
+        }
+      }
+    },
+    {
+      "caption": "Guestroom",
+      "hero_image": false,
+      "category": 21001,
+      "links": {
+        "350px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/bc7245ca_b.jpg"
+        },
+        "70px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/bc7245ca_t.jpg"
+        },
+        "1000px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/bc7245ca_z.jpg"
+        }
+      }
+    },
+    {
+      "caption": "Guestroom",
+      "hero_image": false,
+      "category": 21001,
+      "links": {
+        "350px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/9698f52c_b.jpg"
+        },
+        "70px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/9698f52c_t.jpg"
+        },
+        "1000px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/9698f52c_z.jpg"
+        }
+      }
+    },
+    {
+      "caption": "Guestroom",
+      "hero_image": false,
+      "category": 21001,
+      "links": {
+        "350px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/f4c48cdc_b.jpg"
+        },
+        "70px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/f4c48cdc_t.jpg"
+        },
+        "1000px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/f4c48cdc_z.jpg"
+        }
+      }
+    },
+    {
+      "caption": "Guestroom",
+      "hero_image": false,
+      "category": 21001,
+      "links": {
+        "350px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/86d026ad_b.jpg"
+        },
+        "70px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/86d026ad_t.jpg"
+        },
+        "1000px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/86d026ad_z.jpg"
+        }
+      }
+    },
+    {
+      "caption": "Guestroom",
+      "hero_image": false,
+      "category": 21001,
+      "links": {
+        "350px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/5c4e6d7b_b.jpg"
+        },
+        "70px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/5c4e6d7b_t.jpg"
+        },
+        "1000px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/5c4e6d7b_z.jpg"
+        }
+      }
+    },
+    {
+      "caption": "Guestroom",
+      "hero_image": false,
+      "category": 21001,
+      "links": {
+        "350px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/60589ea5_b.jpg"
+        },
+        "70px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/60589ea5_t.jpg"
+        },
+        "1000px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/60589ea5_z.jpg"
+        }
+      }
+    },
+    {
+      "caption": "Guestroom",
+      "hero_image": false,
+      "category": 21001,
+      "links": {
+        "350px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/a1c578f8_b.jpg"
+        },
+        "70px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/a1c578f8_t.jpg"
+        },
+        "1000px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/a1c578f8_z.jpg"
+        }
+      }
+    },
+    {
+      "caption": "Guestroom",
+      "hero_image": false,
+      "category": 21001,
+      "links": {
+        "350px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/17c4eb11_b.jpg"
+        },
+        "70px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/17c4eb11_t.jpg"
+        },
+        "1000px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/17c4eb11_z.jpg"
+        }
+      }
+    },
+    {
+      "caption": "In-Room Amenity",
+      "hero_image": false,
+      "category": 22009,
+      "links": {
+        "350px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/f95ee2cc_b.jpg"
+        },
+        "70px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/f95ee2cc_t.jpg"
+        },
+        "1000px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/f95ee2cc_z.jpg"
+        }
+      }
+    },
+    {
+      "caption": "Restaurant",
+      "hero_image": false,
+      "category": 81003,
+      "links": {
+        "350px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/a55925a0_b.jpg"
+        },
+        "70px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/a55925a0_t.jpg"
+        },
+        "1000px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/a55925a0_z.jpg"
+        }
+      }
+    },
+    {
+      "caption": "Restaurant",
+      "hero_image": false,
+      "category": 81003,
+      "links": {
+        "350px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/e96451bc_b.jpg"
+        },
+        "70px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/e96451bc_t.jpg"
+        },
+        "1000px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/e96451bc_z.jpg"
+        }
+      }
+    },
+    {
+      "caption": "Restaurant",
+      "hero_image": false,
+      "category": 81003,
+      "links": {
+        "350px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/23ad7b3f_b.jpg"
+        },
+        "70px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/23ad7b3f_t.jpg"
+        },
+        "1000px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/23ad7b3f_z.jpg"
+        }
+      }
+    },
+    {
+      "caption": "Restaurant",
+      "hero_image": false,
+      "category": 81003,
+      "links": {
+        "350px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/49950266_b.jpg"
+        },
+        "70px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/49950266_t.jpg"
+        },
+        "1000px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/49950266_z.jpg"
+        }
+      }
+    },
+    {
+      "caption": "Food and Drink",
+      "hero_image": false,
+      "category": 81012,
+      "links": {
+        "350px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/58128346_b.jpg"
+        },
+        "70px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/58128346_t.jpg"
+        },
+        "1000px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/58128346_z.jpg"
+        }
+      }
+    },
+    {
+      "caption": "Ballroom",
+      "hero_image": false,
+      "category": 83002,
+      "links": {
+        "350px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/853d25e0_b.jpg"
+        },
+        "70px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/853d25e0_t.jpg"
+        },
+        "1000px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/853d25e0_z.jpg"
+        }
+      }
+    },
+    {
+      "caption": "Ballroom",
+      "hero_image": false,
+      "category": 83002,
+      "links": {
+        "350px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/e3df38f2_b.jpg"
+        },
+        "70px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/e3df38f2_t.jpg"
+        },
+        "1000px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/e3df38f2_z.jpg"
+        }
+      }
+    },
+    {
+      "caption": "Meeting Facility",
+      "hero_image": false,
+      "category": 83009,
+      "links": {
+        "350px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/d45c64b5_b.jpg"
+        },
+        "70px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/d45c64b5_t.jpg"
+        },
+        "1000px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/d45c64b5_z.jpg"
+        }
+      }
+    },
+    {
+      "caption": "Meeting Facility",
+      "hero_image": false,
+      "category": 83009,
+      "links": {
+        "350px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/849c0a7f_b.jpg"
+        },
+        "70px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/849c0a7f_t.jpg"
+        },
+        "1000px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/849c0a7f_z.jpg"
+        }
+      }
+    },
+    {
+      "caption": "Meeting Facility",
+      "hero_image": false,
+      "category": 83009,
+      "links": {
+        "350px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/d4b25d8f_b.jpg"
+        },
+        "70px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/d4b25d8f_t.jpg"
+        },
+        "1000px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/d4b25d8f_z.jpg"
+        }
+      }
+    },
+    {
+      "caption": "Business Center",
+      "hero_image": false,
+      "category": 83010,
+      "links": {
+        "350px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/9fd60679_b.jpg"
+        },
+        "70px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/9fd60679_t.jpg"
+        },
+        "1000px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/9fd60679_z.jpg"
+        }
+      }
+    },
+    {
+      "caption": "Exterior",
+      "hero_image": false,
+      "category": 91024,
+      "links": {
+        "350px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/e5345a0f_b.jpg"
+        },
+        "70px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/e5345a0f_t.jpg"
+        },
+        "1000px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/e5345a0f_z.jpg"
+        }
+      }
+    },
+    {
+      "hero_image": false,
+      "category": 0,
+      "links": {
+        "350px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/f0bff7c3_b.jpg"
+        },
+        "70px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/f0bff7c3_t.jpg"
+        },
+        "1000px": {
+          "method": "GET",
+          "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/f0bff7c3_z.jpg"
+        }
+      }
+    }
+  ],
+  "onsite_payments": {
+    "currency": "CNY",
+    "types": {
+      "184": {
+        "id": 184,
+        "name": "Mastercard"
+      },
+      "171": {
+        "id": 171,
+        "name": "American Express"
+      },
+      "189": {
+        "id": 189,
+        "name": "Visa"
+      }
+    }
+  },
+  "rooms": {
+    "221714155": {
+      "id": "221714155",
+      "name": "Family Room, Multiple Beds",
+      "descriptions": {
+        "overview": "<p><strong>1 King Bed and 1 Twin Bed</strong></p><p><b>Internet</b> - Free WiFi </p><p><b>Entertainment</b> - 42-inch LCD TV with premium channels</p><p><b>Food & Drink</b> - Coffee/tea maker and free bottled water </p><p><b>Sleep</b> - A pillow menu and blackout drapes/curtains </p><p><b>Bathroom</b> - Private bathroom, shower, slippers, and free toiletries</p><p><b>Practical</b> - Sofa bed, safe, and iron/ironing board; rollaway/extra beds and cribs/infant beds available on request</p><p><b>Comfort</b> - Air conditioning and daily housekeeping</p><p><b>Need to Know</b> - No rollaway/extra beds available</p><p>Smoking/Non Smoking</p><p>Room/bed type depends on availability at check-in </p>\n<p>Connecting/adjoining rooms can be requested, subject to availability </p>&nbsp;"
+      },
+      "amenities": {
+        "1": {
+          "id": 1,
+          "name": "Air conditioning"
+        },
+        "132": {
+          "id": 132,
+          "name": "Coffee/tea maker"
+        },
+        "4420": {
+          "id": 4420,
+          "name": "Connecting/adjoining rooms available"
+        },
+        "133": {
+          "id": 133,
+          "name": "Daily housekeeping"
+        },
+        "6213": {
+          "id": 6213,
+          "name": "Smoking And Non-Smoking"
+        },
+        "136": {
+          "id": 136,
+          "name": "Phone"
+        },
+        "2057": {
+          "id": 2057,
+          "name": "Free bottled water"
+        },
+        "2572": {
+          "id": 2572,
+          "name": "Pillow menu"
+        },
+        "141": {
+          "id": 141,
+          "name": "Private bathroom"
+        },
+        "143": {
+          "id": 143,
+          "name": "Free toiletries"
+        },
+        "2575": {
+          "id": 2575,
+          "name": "LCD TV"
+        },
+        "144": {
+          "id": 144,
+          "name": "Hair dryer"
+        },
+        "145": {
+          "id": 145,
+          "name": "Iron/ironing board"
+        },
+        "146": {
+          "id": 146,
+          "name": "In-room safe"
+        },
+        "2396": {
+          "id": 2396,
+          "name": "Satellite TV service"
+        },
+        "2081": {
+          "id": 2081,
+          "name": "Premium TV channels"
+        },
+        "2403": {
+          "id": 2403,
+          "name": "Free WiFi"
+        },
+        "2150": {
+          "id": 2150,
+          "name": "Blackout drapes/curtains"
+        },
+        "2026": {
+          "id": 2026,
+          "name": "Desk"
+        },
+        "2162": {
+          "id": 2162,
+          "name": "Slippers"
+        },
+        "2166": {
+          "id": 2166,
+          "name": "Shower only"
+        },
+        "2038": {
+          "id": 2038,
+          "name": "Sofa bed"
+        },
+        "2044": {
+          "id": 2044,
+          "name": "Rollaway/extra beds available"
+        },
+        "2045": {
+          "id": 2045,
+          "name": "Cribs/infant beds available"
+        }
+      },
+      "bed_groups": {
+        "37558": {
+          "id": "37558",
+          "description": "1 King Bed and 1 Twin Bed",
+          "configuration": [
+            {
+              "quantity": 1,
+              "size": "King",
+              "type": "KingBed"
+            },
+            {
+              "quantity": 1,
+              "size": "Twin",
+              "type": "TwinBed"
+            }
+          ]
+        }
+      }
+    },
+    "201829424": {
+      "id": "201829424",
+      "name": "Standard Room, 1 King Bed",
+      "descriptions": {
+        "overview": "<p><strong>1 King Bed</strong></p><p><b>Internet</b> - Free WiFi </p><p><b>Entertainment</b> - 42-inch LCD TV with premium channels</p><p><b>Food & Drink</b> - Coffee/tea maker and free bottled water </p><p><b>Sleep</b> - A pillow menu and blackout drapes/curtains </p><p><b>Bathroom</b> - Private bathroom, shower, slippers, and free toiletries</p><p><b>Practical</b> - Sofa bed, safe, and iron/ironing board; rollaway/extra beds and cribs/infant beds available on request</p><p><b>Comfort</b> - Air conditioning and daily housekeeping</p><p><b>Need to Know</b> - No rollaway/extra beds available</p><p>Smoking/Non Smoking</p><p>Connecting/adjoining rooms can be requested, subject to availability </p>&nbsp;"
+      },
+      "amenities": {
+        "1": {
+          "id": 1,
+          "name": "Air conditioning"
+        },
+        "132": {
+          "id": 132,
+          "name": "Coffee/tea maker"
+        },
+        "4420": {
+          "id": 4420,
+          "name": "Connecting/adjoining rooms available"
+        },
+        "133": {
+          "id": 133,
+          "name": "Daily housekeeping"
+        },
+        "6213": {
+          "id": 6213,
+          "name": "Smoking And Non-Smoking"
+        },
+        "136": {
+          "id": 136,
+          "name": "Phone"
+        },
+        "2057": {
+          "id": 2057,
+          "name": "Free bottled water"
+        },
+        "2572": {
+          "id": 2572,
+          "name": "Pillow menu"
+        },
+        "141": {
+          "id": 141,
+          "name": "Private bathroom"
+        },
+        "143": {
+          "id": 143,
+          "name": "Free toiletries"
+        },
+        "2575": {
+          "id": 2575,
+          "name": "LCD TV"
+        },
+        "144": {
+          "id": 144,
+          "name": "Hair dryer"
+        },
+        "145": {
+          "id": 145,
+          "name": "Iron/ironing board"
+        },
+        "146": {
+          "id": 146,
+          "name": "In-room safe"
+        },
+        "2396": {
+          "id": 2396,
+          "name": "Satellite TV service"
+        },
+        "2081": {
+          "id": 2081,
+          "name": "Premium TV channels"
+        },
+        "2403": {
+          "id": 2403,
+          "name": "Free WiFi"
+        },
+        "2150": {
+          "id": 2150,
+          "name": "Blackout drapes/curtains"
+        },
+        "2026": {
+          "id": 2026,
+          "name": "Desk"
+        },
+        "2162": {
+          "id": 2162,
+          "name": "Slippers"
+        },
+        "2166": {
+          "id": 2166,
+          "name": "Shower only"
+        },
+        "2038": {
+          "id": 2038,
+          "name": "Sofa bed"
+        },
+        "2044": {
+          "id": 2044,
+          "name": "Rollaway/extra beds available"
+        },
+        "2045": {
+          "id": 2045,
+          "name": "Cribs/infant beds available"
+        }
+      },
+      "images": [
+        {
+          "hero_image": true,
+          "category": 21001,
+          "links": {
+            "350px": {
+              "method": "GET",
+              "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/86d026ad_b.jpg"
+            },
+            "70px": {
+              "method": "GET",
+              "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/86d026ad_t.jpg"
+            },
+            "200px": {
+              "method": "GET",
+              "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/86d026ad_s.jpg"
+            },
+            "1000px": {
+              "method": "GET",
+              "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/86d026ad_z.jpg"
+            }
+          }
+        },
+        {
+          "hero_image": false,
+          "category": 22009,
+          "links": {
+            "350px": {
+              "method": "GET",
+              "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/f95ee2cc_b.jpg"
+            },
+            "70px": {
+              "method": "GET",
+              "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/f95ee2cc_t.jpg"
+            },
+            "200px": {
+              "method": "GET",
+              "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/f95ee2cc_s.jpg"
+            },
+            "1000px": {
+              "method": "GET",
+              "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/f95ee2cc_z.jpg"
+            }
+          }
+        }
+      ],
+      "bed_groups": {
+        "37321": {
+          "id": "37321",
+          "description": "1 King Bed",
+          "configuration": [
+            {
+              "quantity": 1,
+              "size": "King",
+              "type": "KingBed"
+            }
+          ]
+        }
+      }
+    },
+    "201829425": {
+      "id": "201829425",
+      "name": "Standard Room, 2 Twin Beds",
+      "descriptions": {
+        "overview": "<p><strong>2 Twin Beds</strong></p><p><b>Internet</b> - Free WiFi </p><p><b>Entertainment</b> - 42-inch LCD TV with premium channels</p><p><b>Food & Drink</b> - Coffee/tea maker and free bottled water </p><p><b>Sleep</b> - A pillow menu and blackout drapes/curtains </p><p><b>Bathroom</b> - Private bathroom, shower, slippers, and free toiletries</p><p><b>Practical</b> - Safe, double sofa bed, and iron/ironing board; rollaway/extra beds and cribs/infant beds available on request</p><p><b>Comfort</b> - Air conditioning and daily housekeeping</p><p>Smoking/Non Smoking</p><p>Room/bed type depends on availability at check-in </p>\n<p>Connecting/adjoining rooms can be requested, subject to availability </p>&nbsp;"
+      },
+      "amenities": {
+        "1": {
+          "id": 1,
+          "name": "Air conditioning"
+        },
+        "132": {
+          "id": 132,
+          "name": "Coffee/tea maker"
+        },
+        "4420": {
+          "id": 4420,
+          "name": "Connecting/adjoining rooms available"
+        },
+        "133": {
+          "id": 133,
+          "name": "Daily housekeeping"
+        },
+        "6213": {
+          "id": 6213,
+          "name": "Smoking And Non-Smoking"
+        },
+        "136": {
+          "id": 136,
+          "name": "Phone"
+        },
+        "2057": {
+          "id": 2057,
+          "name": "Free bottled water"
+        },
+        "2572": {
+          "id": 2572,
+          "name": "Pillow menu"
+        },
+        "141": {
+          "id": 141,
+          "name": "Private bathroom"
+        },
+        "143": {
+          "id": 143,
+          "name": "Free toiletries"
+        },
+        "2575": {
+          "id": 2575,
+          "name": "LCD TV"
+        },
+        "144": {
+          "id": 144,
+          "name": "Hair dryer"
+        },
+        "145": {
+          "id": 145,
+          "name": "Iron/ironing board"
+        },
+        "146": {
+          "id": 146,
+          "name": "In-room safe"
+        },
+        "2396": {
+          "id": 2396,
+          "name": "Satellite TV service"
+        },
+        "2081": {
+          "id": 2081,
+          "name": "Premium TV channels"
+        },
+        "2403": {
+          "id": 2403,
+          "name": "Free WiFi"
+        },
+        "2150": {
+          "id": 2150,
+          "name": "Blackout drapes/curtains"
+        },
+        "2026": {
+          "id": 2026,
+          "name": "Desk"
+        },
+        "2162": {
+          "id": 2162,
+          "name": "Slippers"
+        },
+        "2166": {
+          "id": 2166,
+          "name": "Shower only"
+        },
+        "2038": {
+          "id": 2038,
+          "name": "Sofa bed"
+        },
+        "2044": {
+          "id": 2044,
+          "name": "Rollaway/extra beds available"
+        },
+        "2045": {
+          "id": 2045,
+          "name": "Cribs/infant beds available"
+        }
+      },
+      "images": [
+        {
+          "hero_image": true,
+          "category": 21001,
+          "links": {
+            "350px": {
+              "method": "GET",
+              "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/bc7245ca_b.jpg"
+            },
+            "70px": {
+              "method": "GET",
+              "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/bc7245ca_t.jpg"
+            },
+            "200px": {
+              "method": "GET",
+              "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/bc7245ca_s.jpg"
+            },
+            "1000px": {
+              "method": "GET",
+              "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/bc7245ca_z.jpg"
+            }
+          }
+        },
+        {
+          "hero_image": false,
+          "category": 21001,
+          "links": {
+            "350px": {
+              "method": "GET",
+              "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/5c4e6d7b_b.jpg"
+            },
+            "70px": {
+              "method": "GET",
+              "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/5c4e6d7b_t.jpg"
+            },
+            "200px": {
+              "method": "GET",
+              "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/5c4e6d7b_s.jpg"
+            },
+            "1000px": {
+              "method": "GET",
+              "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/5c4e6d7b_z.jpg"
+            }
+          }
+        }
+      ],
+      "bed_groups": {
+        "37341": {
+          "id": "37341",
+          "description": "2 Twin Beds",
+          "configuration": [
+            {
+              "quantity": 2,
+              "size": "Twin",
+              "type": "TwinBed"
+            }
+          ]
+        }
+      }
+    },
+    "201829426": {
+      "id": "201829426",
+      "name": "Superior Room, 2 Twin Beds",
+      "descriptions": {
+        "overview": "<p><strong>2 Twin Beds</strong></p><p><b>Internet</b> - Free WiFi </p><p><b>Entertainment</b> - 42-inch LCD TV with premium channels</p><p><b>Food & Drink</b> - Coffee/tea maker and free bottled water </p><p><b>Sleep</b> - A pillow menu and blackout drapes/curtains </p><p><b>Bathroom</b> - Private bathroom, shower, slippers, and free toiletries</p><p><b>Practical</b> - Safe, double sofa bed, and iron/ironing board; rollaway/extra beds and cribs/infant beds available on request</p><p><b>Comfort</b> - Air conditioning and daily housekeeping</p><p>Smoking/Non Smoking</p><p>Room/bed type depends on availability at check-in </p>\n<p>Connecting/adjoining rooms can be requested, subject to availability </p>&nbsp;"
+      },
+      "amenities": {
+        "1": {
+          "id": 1,
+          "name": "Air conditioning"
+        },
+        "132": {
+          "id": 132,
+          "name": "Coffee/tea maker"
+        },
+        "4420": {
+          "id": 4420,
+          "name": "Connecting/adjoining rooms available"
+        },
+        "133": {
+          "id": 133,
+          "name": "Daily housekeeping"
+        },
+        "6213": {
+          "id": 6213,
+          "name": "Smoking And Non-Smoking"
+        },
+        "136": {
+          "id": 136,
+          "name": "Phone"
+        },
+        "2057": {
+          "id": 2057,
+          "name": "Free bottled water"
+        },
+        "2572": {
+          "id": 2572,
+          "name": "Pillow menu"
+        },
+        "141": {
+          "id": 141,
+          "name": "Private bathroom"
+        },
+        "143": {
+          "id": 143,
+          "name": "Free toiletries"
+        },
+        "2575": {
+          "id": 2575,
+          "name": "LCD TV"
+        },
+        "144": {
+          "id": 144,
+          "name": "Hair dryer"
+        },
+        "145": {
+          "id": 145,
+          "name": "Iron/ironing board"
+        },
+        "146": {
+          "id": 146,
+          "name": "In-room safe"
+        },
+        "2396": {
+          "id": 2396,
+          "name": "Satellite TV service"
+        },
+        "2081": {
+          "id": 2081,
+          "name": "Premium TV channels"
+        },
+        "2403": {
+          "id": 2403,
+          "name": "Free WiFi"
+        },
+        "2150": {
+          "id": 2150,
+          "name": "Blackout drapes/curtains"
+        },
+        "2026": {
+          "id": 2026,
+          "name": "Desk"
+        },
+        "2162": {
+          "id": 2162,
+          "name": "Slippers"
+        },
+        "2166": {
+          "id": 2166,
+          "name": "Shower only"
+        },
+        "2038": {
+          "id": 2038,
+          "name": "Sofa bed"
+        },
+        "2044": {
+          "id": 2044,
+          "name": "Rollaway/extra beds available"
+        },
+        "2045": {
+          "id": 2045,
+          "name": "Cribs/infant beds available"
+        }
+      },
+      "images": [
+        {
+          "hero_image": true,
+          "category": 21001,
+          "links": {
+            "350px": {
+              "method": "GET",
+              "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/f4c48cdc_b.jpg"
+            },
+            "70px": {
+              "method": "GET",
+              "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/f4c48cdc_t.jpg"
+            },
+            "200px": {
+              "method": "GET",
+              "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/f4c48cdc_s.jpg"
+            },
+            "1000px": {
+              "method": "GET",
+              "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/f4c48cdc_z.jpg"
+            }
+          }
+        },
+        {
+          "hero_image": false,
+          "category": 21001,
+          "links": {
+            "350px": {
+              "method": "GET",
+              "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/5c4e6d7b_b.jpg"
+            },
+            "70px": {
+              "method": "GET",
+              "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/5c4e6d7b_t.jpg"
+            },
+            "200px": {
+              "method": "GET",
+              "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/5c4e6d7b_s.jpg"
+            },
+            "1000px": {
+              "method": "GET",
+              "href": "https://i.travelapi.com/hotels/18000000/17320000/17311300/17311233/5c4e6d7b_z.jpg"
+            }
+          }
+        }
+      ],
+      "bed_groups": {
+        "37341": {
+          "id": "37341",
+          "description": "2 Twin Beds",
+          "configuration": [
+            {
+              "quantity": 2,
+              "size": "Twin",
+              "type": "TwinBed"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "rates": {
+    "210287083": {
+      "id": "210287083",
+      "amenities": {
+        "2194": {
+          "id": 2194,
+          "name": "Breakfast for 2"
+        }
+      }
+    },
+    "210287082": {
+      "id": "210287082",
+      "amenities": {
+        "2194": {
+          "id": 2194,
+          "name": "Breakfast for 2"
+        }
+      }
+    },
+    "210287080": {
+      "id": "210287080",
+      "amenities": {
+        "2194": {
+          "id": 2194,
+          "name": "Breakfast for 2"
+        }
+      }
+    },
+    "298048033": {
+      "id": "298048033",
+      "amenities": {
+        "2194": {
+          "id": 2194,
+          "name": "Breakfast for 2"
+        }
+      }
+    },
+    "210051558": {
+      "id": "210051558",
+      "amenities": {
+        "2194": {
+          "id": 2194,
+          "name": "Breakfast for 2"
+        }
+      }
+    },
+    "298048032": {
+      "id": "298048032",
+      "amenities": {
+        "2194": {
+          "id": 2194,
+          "name": "Breakfast for 2"
+        }
+      }
+    },
+    "209297054": {
+      "id": "209297054",
+      "amenities": {
+        "2194": {
+          "id": 2194,
+          "name": "Breakfast for 2"
+        }
+      }
+    },
+    "210051559": {
+      "id": "210051559",
+      "amenities": {
+        "2194": {
+          "id": 2194,
+          "name": "Breakfast for 2"
+        }
+      }
+    },
+    "209297055": {
+      "id": "209297055",
+      "amenities": {
+        "2194": {
+          "id": 2194,
+          "name": "Breakfast for 2"
+        }
+      }
+    },
+    "209297056": {
+      "id": "209297056",
+      "amenities": {
+        "2194": {
+          "id": 2194,
+          "name": "Breakfast for 2"
+        }
+      }
+    },
+    "209297057": {
+      "id": "209297057",
+      "amenities": {
+        "2194": {
+          "id": 2194,
+          "name": "Breakfast for 2"
+        }
+      }
+    },
+    "209297058": {
+      "id": "209297058",
+      "amenities": {
+        "2194": {
+          "id": 2194,
+          "name": "Breakfast for 2"
+        }
+      }
+    },
+    "298048031": {
+      "id": "298048031",
+      "amenities": {
+        "2194": {
+          "id": 2194,
+          "name": "Breakfast for 2"
+        }
+      }
+    },
+    "298048030": {
+      "id": "298048030",
+      "amenities": {
+        "2194": {
+          "id": 2194,
+          "name": "Breakfast for 2"
+        }
+      }
+    },
+    "210051560": {
+      "id": "210051560",
+      "amenities": {
+        "2194": {
+          "id": 2194,
+          "name": "Breakfast for 2"
+        }
+      }
+    },
+    "209297060": {
+      "id": "209297060",
+      "amenities": {
+        "2194": {
+          "id": 2194,
+          "name": "Breakfast for 2"
+        }
+      }
+    }
+  },
+  "dates": {
+    "added": "2017-01-04T13:08:33.700Z",
+    "updated": "2019-04-17T02:18:52.569Z"
+  },
+  "descriptions": {
+    "amenities": "Make use of convenient amenities, which include complimentary wireless Internet access and a ballroom.",
+    "dining": "Enjoy a satisfying meal at Great Hall serving guests of Holiday Inn Express Yingkou Onelong Plaza. A complimentary buffet breakfast is served daily from 6:30 AM to 10 AM.",
+    "national_ratings": "For the benefit of our customers, we have provided a rating based on our rating system.",
+    "business_amenities": "Free self parking is available onsite.",
+    "rooms": "Make yourself at home in one of the 220 air-conditioned rooms featuring LCD televisions. Complimentary wireless Internet access keeps you connected, and satellite programming is available for your entertainment. Private bathrooms with showers feature complimentary toiletries and hair dryers. Conveniences include phones, as well as safes and desks.",
+    "attractions": "Distances are displayed to the nearest 0.1 mile and kilometer. <br /> <p>Hongyun Electron Shopping Mall - 1 km / 0.6 mi <br /> Bayuquan Television University - 3.3 km / 2.1 mi <br /> Duntaishan Park - 4.5 km / 2.8 mi <br /> Shanhai Square - 9.6 km / 6 mi <br /> Guishi Beach - 10.2 km / 6.4 mi <br /> Fairy Island Beach - 15.5 km / 9.6 mi <br /> </p><p>The nearest major airport is Yingkou (YKH-Yingkou Lanqi) - 42 km / 26.1 mi</p>",
+    "location": "With a stay at Holiday Inn Express Yingkou Onelong Plaza in Yingkou (Bayuquan District), you'll be within a 15-minute drive of Hongyun Electron Shopping Mall and Bayuquan Television University.  This hotel is 3 mi (4.8 km) from Duntaishan Park and 6 mi (9.6 km) from Shanhai Square.",
+    "headline": "In Yingkou (Bayuquan District)"
+  },
+  "airports": {
+    "preferred": {
+      "iata_airport_code": "YHK"
+    }
+  },
+  "themes": {
+    "2328": {
+      "id": 2328,
+      "name": "Business Hotel"
+    },
+    "2333": {
+      "id": 2333,
+      "name": "Family Property"
+    }
+  },
+  "statistics": {
+    "52": {
+      "id": 52,
+      "name": "Total number of rooms - 220",
+      "value": "220"
+    },
+    "54": {
+      "id": 54,
+      "name": "Number of floors - 11",
+      "value": "11"
+    }
+  }
+}
