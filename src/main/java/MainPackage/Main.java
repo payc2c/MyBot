@@ -5,7 +5,6 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -25,10 +24,7 @@ public class Main {
     private String password;
     private static String PAYLOAD;
 
-    public Main(String userName, String password) {
-        this.userName = userName;
-        this.password = password;
-    }
+
 
     enum Stages {
         HOME("https://www.yoursex.ru/index.php"),
@@ -193,16 +189,12 @@ public class Main {
 
     }
 
+
     public static void main(String[] args) throws Exception {
-        String username = "Lira98";
-        String password = "rambler";
-        String payLoad = "act=xmlout&do=load-anks-search&anks=24&want=1&af=18&at=50&city_id=city-4400&for=0&some_city=&sponsor=&some_sex=&some_age=1&order_asc=&has_ad=&has_avatar=&has_sig=&has_want" +
-                "=&";
-        //Arrays.stream(payLoad.split("&")).map(s->s.split("=")).forEach(s-> System.out.println(String.format("{\"%s\",\"%s\"}",s[0],s[1])));
-        System.out.println((1551479757706321L-15514789733854L)/1000/60);
-        NewHttpClient client = new NewHttpClient(username,password);
+        String username = "adgszc@smart-mail.info";
+        String password = "123123123gf";
+        NewHttpClient client = new NewHttpClient(username, password);
         client.run();
-         System.out.println(URLDecoder.decode("referer=https%3A%2F%2Fwww.yoursex.ru%2F&UserName=lira98&PassWord=rambler&CookieDate=1","UTF-8"));
-        System.out.println(URLEncoder.encode("referer=https://www.yoursex.ru/&UserName=lira98&PassWord=rambler&CookieDate=1","UTF-8").replaceAll("%3D","\\="));
-          }
+
+    }
 }

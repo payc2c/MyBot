@@ -8,6 +8,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -18,6 +19,7 @@ import org.apache.http.util.EntityUtils;
 
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
@@ -36,6 +38,7 @@ public class NewHttpClient {
     private String password;
     private String myID;
     private Set<Integer> idSet = new HashSet<>();
+    private Set<Integer> spamSet = new HashSet<>();
 
     enum Stages {
         HOME("https://www.yoursex.ru/index.php"),
@@ -45,7 +48,9 @@ public class NewHttpClient {
         ID_LIST("https://www.yoursex.ru/znakomstva.html"),
         FIRST_BATCH_ID_LIST("https://www.yoursex.ru/znakomstva.html"),
         MESSAGES("https://www.yoursex.ru/messages.html"),
-        SEND_MESSAGE("https://www.yoursex.ru/index.php");
+        SEND_MESSAGE("https://www.yoursex.ru/index.php"),
+        ID_SET(""),
+        SPAMMED_ID_SET("");
 
         private String URL;
 
@@ -70,7 +75,18 @@ public class NewHttpClient {
 
     }
 
-    void run() {
+    private void readIDs() throws Exception {
+        Path p = Paths.get(ID_SET.toString());
+        if (Files.exists(p)) {
+            String ids = new String(Files.readAllBytes(p), "UTF-8");
+            ids = ids.substring(1, ids.length() - 1);
+            idSet = Arrays.stream(ids.split(",")).map(s -> Integer.parseInt(s.trim())).collect(Collectors.toSet());
+            System.out.println(idSet);
+        } else System.out.println("ERROR");
+    }
+
+    void run() throws Exception {
+        readIDs();
         try (CloseableHttpClient httpClient = HttpClients.custom().setDefaultHeaders(HEADERS).setDefaultCookieStore(cookieStore).build()) {
             String queryParam;
             get(HOME.getURL(), HOME, httpClient);
@@ -82,8 +98,10 @@ public class NewHttpClient {
             String response = get(LOGIN_USER.getURL(), LOGIN_USER, httpClient);
             if (response.contains("<div id=\"userlinks\">")) {
                 System.out.println("SUCCESSFUL");
-            } else System.out.println("FAILURE");
-
+            } else if (response.contains("errorwrap")) System.out.println("FAILURE_BLOCKED");
+            else {
+                System.out.println("FAILURE_NO_LOGIN");
+            }
             extractIDs(response, false, true);
 
             Thread.sleep(500);
@@ -93,21 +111,33 @@ public class NewHttpClient {
             Thread.sleep(500);
             get(MESSAGES.getURL(), MESSAGES, httpClient);
             Thread.sleep(500);
-            queryParam = "?act=xmlout&do=add-dialog-message&PHPSESSID=%s&JsHttpRequest=%s-form";
-            sendMessage(HOME.getURL(), SEND_MESSAGE, queryParam, httpClient);
-            queryParam = "?want=1&af=18&at=50&some_age=1&city_id=city-4400&for=0";
-
-            /*response = post(HOME.getURL() + queryParam, ID_LIST.toString(), idLoad("",""), httpClient);
+            queryParam = "?want=1&af=18&at=50&some_age=1&city_id=city-4962&for=0";
+            //SPB city-4962
+            //MSK city-4400
+            response = post(HOME.getURL() + queryParam, ID_LIST, idLoad("", ""), httpClient);
             extractIDs(response, false, false);
-            for (int i = 48;i<1000;i=i+24){
-                response = post(HOME.getURL() + queryParam, ID_LIST.toString(), idLoad("anks",String.valueOf(i)), httpClient);
-                extractIDs(response,false,false);
+            int max = 10000;
+          /*  try {
+                for (int i = 48; i < max; i = i + 24) {
+                    response = post(HOME.getURL() + queryParam, ID_LIST, idLoad("anks", String.valueOf(i)), httpClient);
+                    extractIDs(response, false, false);
+                    System.out.println(idSet.size() + "/" + max);
+
+                }
+
+            } catch (Exception e) {
+                throw new Exception(e);
+            } finally {
+                writeFile(idSet.toString(), ID_SET);
             }*/
+            queryParam = "?act=xmlout&do=add-dialog-message&PHPSESSID=%s&JsHttpRequest=%s-form";
             System.out.println(idSet.size());
-            // idSet.forEach(System.out::println);
+            sendMessage(HOME.getURL(), SEND_MESSAGE, queryParam, httpClient);
+            //idSet.forEach(System.out::println);
         } catch (Exception e) {
-            System.err.println(e);
+            e.printStackTrace();
         }
+
     }
 
     private String get(String url, Stages stage, CloseableHttpClient httpClient) throws Exception {
@@ -127,26 +157,45 @@ public class NewHttpClient {
         return entityString;
     }
 
+
+    String message;
+
     //act=xmlout&do=add-dialog-message&PHPSESSID=id294htrgrb149895lq45i8ars&JsHttpRequest=1551924615972419-form
     private String sendMessage(String url, Stages stage, String payLoad, CloseableHttpClient client) throws Exception {
+        message = "Првиет, не хочешь познакомится ближе, я занимаюсь интим услуами (индивидуалка) вот мой номер вотсапа и Вайбера 9774020155, пиши, всегда отвечу, отправлю фото и видео, могувирт";
         String phpSID = cookieStore.getCookies().stream().filter(c -> c.getName().equalsIgnoreCase("PHPSESSID")).findAny().get().getValue();
         String load = String.format(payLoad, phpSID, String.valueOf(System.currentTimeMillis()));
-        HttpPost post = new HttpPost(url + load);
-        String entityString;
-        HttpEntity entity = MultipartEntityBuilder.create()
-                .addBinaryBody("q", new byte[]{})
-                .addTextBody("to", "174004")
-                .addTextBody("post", "hello").build();
-        post.setEntity(entity);
-        EntityUtils.consume(entity);
-        try (CloseableHttpResponse response = client.execute(post)) {
-            System.out.println(response.getStatusLine());
-            HttpEntity responseEntity = response.getEntity();
-            entityString = IOUtils.toString(responseEntity.getContent(), "Windows-1251");
-            writeFile(entityString, stage);
-            EntityUtils.consume(responseEntity);
+        String entityString = null;
+        int counter = 0;
+        try {
+
+            for (int i : idSet) {
+
+                HttpPost post = new HttpPost(url + load);
+                HttpEntity entity = MultipartEntityBuilder.create()
+                        .addBinaryBody("q", new byte[]{})
+                        .addTextBody("to", String.valueOf(i))
+                        .addTextBody("post", message, ContentType.TEXT_HTML).build();
+                post.setEntity(entity);
+                try (CloseableHttpResponse response = client.execute(post)) {
+                    HttpEntity responseEntity = response.getEntity();
+                    entityString = IOUtils.toString(responseEntity.getContent(), "Windows-1251");
+                    writeFile(entityString, stage);
+                    EntityUtils.consume(responseEntity);
+                    EntityUtils.consume(entity);
+                    counter++;
+                    if (counter % 100 == 0) System.out.println(counter + "/" + idSet.size());
+                    spamSet.add(i);
+                    //if (counter > 10000)break;
+                } catch (Exception e) {
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            writeFile(spamSet.toString(), SPAMMED_ID_SET);
         }
-        return entityString;
+        return entityString != null ? entityString : "";
 
     }
 
@@ -185,7 +234,7 @@ public class NewHttpClient {
         map.put("want", "1");
         map.put("af", "18");
         map.put("at", "50");
-        map.put("city_id", "-4400");
+        map.put("city_id", "-4962");
         map.put("for", "0");
         map.put("some_city", "");
         map.put("sponsor", "");

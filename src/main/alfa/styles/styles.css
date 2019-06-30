@@ -105,6 +105,18 @@ body{
     position:absolute;
     bottom:5px
 }
+.ik_select_link.date,input.card-month{
+    width:20px;
+    margin-right:20px;
+    position:absolute;
+    bottom:5px
+}
+.ik_select_link.date,input.card-year{
+    width:20px;
+    margin-right:40px;
+    position:absolute;
+    bottom:5px
+}
 .ik_select_link.cvc,input.cvc{
     width:120px;
     position:absolute;
@@ -1220,11 +1232,12 @@ body{
 }
 .control.card .input-container .info{
     height:19px;
-    margin-top:8px;
-    position:absolute;
+    margin-top:23px;
+    position: relative;
     left:0;
+    display: inherit;
     font-size:16px;
-    opacity:.5
+    opacity:.5;
 }
 .control.card .input-container .card-number-input{
     margin:0 auto;
@@ -1248,6 +1261,14 @@ body{
     position:relative;
     margin-left:32px
 }
+#card-month{
+    width:30px;
+    display:inline
+    }
+#card-year{
+    display:inline;
+    width:30px
+    }
 .control.card .focus-box-shadow{
     width:364px;
     height:70px;
@@ -1316,6 +1337,11 @@ body{
     }
     .control.card .input-container .date-input{
         margin-left:16px
+
+    }
+    .control.card .input-container .card_month{
+        width:40px;
+        height:40px
     }
     .cardsInfo .control.m-left{
         margin-left:10px
