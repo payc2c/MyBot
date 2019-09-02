@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: com.jetbrains:purejavacomm-0.0.11.1:2018.3.5">
+    <ANNOTATIONS>
+      <root url="jar://$MAVEN_REPOSITORY$/com/jetbrains/intellij/idea/ideaIU/2018.3.6/ideaIU-2018.3.6-annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2018.3.5/2465ddbc4af3619128cada78e216ffbb93e8b173/ideaIC-2018.3.5/lib/purejavacomm-0.0.11.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2018.3.5/78cbcd517ec112fbb0c7b45b00b464c1aa6371f3/ideaIC-2018.3.5-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

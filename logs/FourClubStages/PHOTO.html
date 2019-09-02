@@ -1,0 +1,215 @@
+<div class="icoClosePopup" id="popupClose"></div>
+<div class="popupTitle"><span class="icoPopup icoPlus"></span>
+    <p class="popupTitleText">Upload media</p></div>
+<div class="popupBody ">
+    <div class="introPopUpload desktop hidePopComplete"><span>YES!</span> We want to see your naughty, fetish, in lingerie, and explicit pictures. But we'd also want to see photos of you where you
+        show other parts of your body, not just the intimate ones... your partners as well would like see different parts of you.
+    </div>
+    <div class="formContainer">
+        <div class="formContainerRow rowChoose hidePopComplete">
+            <div class="formContainerL"><label>media type:</label></div>
+            <div class="formContainerR" id="boxChooseMedia">
+                <div class="btn01 chooseMedia  selected " rel="boxPhoto">photo</div>
+                <div class="btn01 chooseMedia  " rel="boxVideo">videos</div>
+                <div class="btn01 chooseMedia desktop   " id="chooseWebcam" rel="boxWebcam">webcam</div>
+            </div>
+        </div>
+        <div class="formBox" id="boxPhoto">
+            <form action="/media/uploadphoto" id="formPhoto" method="post"><input name="verified" type="hidden" value="0">
+                <div class="formContainerRow">
+                    <div class="formContainerL labelBox"><label><span class="redCheck">*</span>file upload:</label></div>
+                    <div class="formContainerR inputBox"><input accept="image/x-png, image/jpeg" enctype="multipart/form-data" id="btnUploadPhoto" name="fileUpload" type="file"/>
+                        <div class="errorPlaceInner"></div>
+                    </div>
+                </div>
+                <div class="formContainerRow hidePopComplete">
+                    <div class="formContainerL labelBox"><label>make anonymous:</label></div>
+                    <div class="formContainerR inputBox"><input class="gaClass" data-gaid="popupUploadPhotoAnonymous" name="anonymous" type="checkbox"/> <label class="helpTxt">&#40;will not be
+                        displayed on profile&#41;</label>
+                        <div class="errorPlaceInner"></div>
+                        <div id="outputPhoto"></div>
+                    </div>
+                </div>
+                <div class="formContainerRow">
+                    <div class="formContainerL labelBox"><label><span class="redCheck">*</span>title:</label></div>
+                    <div class="formContainerR inputBox"><input class="required" name="title" type="text"/>
+                        <div class="errorPlaceInner"></div>
+                    </div>
+                </div>
+                <div class="formContainerRow">
+                    <div class="formContainerL labelBox"><label>description:</label><label class="helpTxt">&#40;max 250 char.&#41;</label></div>
+                    <div class="formContainerR inputBox"><textarea name="description"></textarea>
+                        <div class="errorPlaceInner"></div>
+                    </div>
+                </div>
+                <div class="formContainerRow hidePopComplete">
+                    <div class="formContainerL labelBox"><label>set as selfie:</label></div>
+                    <div class="formContainerR inputBox"><input class="gaClass" data-gaid="popupUploadPhotoSelfie" name="selfie" type="checkbox"/> <label class="helpTxt">&#40;displayed to everybody in
+                        selfie area&#41;</label>
+                        <div class="errorPlaceInner"></div>
+                    </div>
+                </div>
+                <div class="formContainerRow hidePopComplete">
+                    <div class="formContainerL labelBox"><label>set as private:</label></div>
+                    <div class="formContainerR inputBox"><input class="gaClass" data-gaid="popupUploadPhotoPrivate" name="private" type="checkbox"/> <label class="helpTxt">&#40;available only for your
+                        hotties network&#41;</label>
+                        <div class="errorPlaceInner"></div>
+                    </div>
+                </div>
+                <div class="formContainerRow submitMediaPop">
+                    <div class="btn02 subForm" id="subPhoto">submit</div>
+                </div>
+                <div class="progressbox">
+                    <div class="statustxt">progress: <span></span>%</div>
+                    <div class="progressbarBox">
+                        <div class="progressbar"></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="formBox hidePopComplete" id="boxVideo">
+            <form action="/media/uploadvideo" id="formVideo" method="post">
+                <div class="formContainerRow">
+                    <div class="formContainerL labelBox"><label><span class="redCheck">*</span>file upload:</label></div>
+                    <div class="formContainerR inputBox"><input accept="video/mp4, video/quicktime, video/msvideo, video/wmv, video/avi, video/mpeg" enctype="multipart/form-data" name="fileUpload"
+                                                                type="file"/>
+                        <div class="errorPlaceInner"></div>
+                    </div>
+                </div>
+                <div class="formContainerRow">
+                    <div class="formContainerL labelBox"><label>make anonymous:</label></div>
+                    <div class="formContainerR inputBox"><input class="gaClass" data-gaid="popupUploadVideoAnonymous" name="anonymous" type="checkbox"/> <label class="helpTxt">&#40;will not be
+                        displayed on profile&#41;</label>
+                        <div class="errorPlaceInner"></div>
+                    </div>
+                </div>
+                <div class="formContainerRow">
+                    <div class="formContainerL labelBox"><label><span class="redCheck">*</span>title:</label></div>
+                    <div class="formContainerR inputBox"><input class="required" name="title" type="text"/>
+                        <div class="errorPlaceInner"></div>
+                    </div>
+                </div>
+                <div class="formContainerRow">
+                    <div class="formContainerL labelBox"><label>description:</label><label class="helpTxt">&#40;max 250 char.&#41;</label></div>
+                    <div class="formContainerR inputBox"><textarea name="description"></textarea>
+                        <div class="errorPlaceInner"></div>
+                    </div>
+                </div>
+                <div class="formContainerRow">
+                    <div class="btn02 subForm" id="subVideo">submit</div>
+                </div>
+                <div class="progressbox">
+                    <div class="statustxt">progress: <span></span>%</div>
+                    <div class="progressbarBox">
+                        <div class="progressbar"></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="formBox" id="boxWebcam">
+            <form id="formWebcam"><input name="verified" type="hidden" value="0">
+                <div class="formContainerRow">
+                    <div class="formContainerL labelBox"><label><span class="redCheck">*</span>shoot:</label></div>
+                    <div class="formContainerR inputBox">
+                        <button class="openPopupOver btn02 btnOpenCam" data-popOver="popOverCam" id="btnOpenCam">open webcam</button>
+                        <img class="shooted" id="imgShooted" src=""/>
+                        <div class="errorPlaceInner" id="webcamError"></div>
+                    </div>
+                </div>
+                <div class="openPopupOverHide" id="popOverCam">
+                    <div class="webcamContent" id="webcamContent"></div>
+                    <div class="COCTwoButton" id="webcamBtns">
+                        <div class="btn02 disabled" id="webcamUpload">OK</div>
+                        <div class="btn02 disabled" id="webcamShot">shoot</div>
+                        <div class="btn01 disabled" id="webcamRestart">retake</div>
+                    </div>
+                    <div class="closePopOver"></div>
+                </div>
+                <div class="formContainerRow hidePopComplete">
+                    <div class="formContainerL labelBox"><label>make anonymous:</label></div>
+                    <div class="formContainerR inputBox"><input class="gaClass" data-gaid="popupUploadWebcamAnonymous" name="anonymous" type="checkbox"/> <label class="helpTxt">&#40;will not be
+                        displayed on profile&#41;</label>
+                        <div class="errorPlaceInner"></div>
+                    </div>
+                </div>
+                <div class="formContainerRow">
+                    <div class="formContainerL labelBox"><label><span class="redCheck">*</span>title:</label></div>
+                    <div class="formContainerR inputBox"><input class="required" name="title" type="text"/>
+                        <div class="errorPlaceInner"></div>
+                    </div>
+                </div>
+                <div class="formContainerRow">
+                    <div class="formContainerL labelBox"><label>description:</label><label class="helpTxt">&#40;max 250 char.&#41;</label></div>
+                    <div class="formContainerR inputBox"><textarea name="description"></textarea>
+                        <div class="errorPlaceInner"></div>
+                    </div>
+                </div>
+                <div class="formContainerRow hidePopComplete">
+                    <div class="formContainerL labelBox"><label>set as selfie:</label></div>
+                    <div class="formContainerR inputBox"><input class="gaClass" data-gaid="popupUploadWebcamSelfie" name="selfie" type="checkbox"/> <label class="helpTxt">&#40;displayed to everybody
+                        in selfie area&#41;</label>
+                        <div class="errorPlaceInner"></div>
+                    </div>
+                </div>
+                <div class="formContainerRow hidePopComplete">
+                    <div class="formContainerL labelBox"><label>set as private:</label></div>
+                    <div class="formContainerR inputBox"><input class="gaClass" data-gaid="popupUploadWebcamPrivate" name="hotties" type="checkbox"/> <label class="helpTxt">&#40;available only for
+                        your hotties network&#41;</label>
+                        <div class="errorPlaceInner"></div>
+                    </div>
+                </div>
+                <div class="formContainerRow">
+                    <div class="btn02 subForm" id="subWebcam">submit</div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="footerPopUpl">It is not allowed violent, offensive, copyrighted material, or images/videos of other people without their explicit consent.There are not allowed pictures/video of
+        children under 18 years old. The site is for adults only.If a user uploads sexually explicit pictures, must comply with the child protection and obscenity enforcement act &#40;Code 18 U.S.C.
+        2257 of the United States Code of Federal Regulations&#41; by identifying the name and address of the person who holds copies which prove that individuals in the pictures were over 18 years
+        oldwhen the pictures were taken. <a
+                href='http://www.gpo.gov/fdsys/search/pagedetails.action;jsessionid=HtXGVylGBP8pZcTxJFfxBDhV5CK3mSbJ4R8yDLbGyKT4DhyLGtQ3!1549446635!-1697915083?browsePath=Title+18%2FPart+I%2FChapter+110%2FSec.+2257A&granuleId=USCODE-2010-title18-partI-chap110-sec2257A&packageId=USCODE-2010-title18&collapse=true&fromBrowse=true'
+                target='_blank'> Click here to read the full policy </a>.
+    </div>
+</div>
+<script>
+    i18n["Unsupported file type!"] = "Unsupported file type!";i18n["Too big Image file! Please reduce the size of your photo using an image editor."] = "Too big Image file! Please reduce the size of your photo using an image editor.";i18n["This is a required field and cannot be empty"] = "This is a required field and cannot be empty";i18n["Titles containing phone numbers, e-mails, websites are not allowed."] = "Titles containing phone numbers, e-mails, websites are not allowed";i18n["Descriptions containing phone numbers, e-mails, websites are not allowed."] = "Descriptions containing phone numbers, e-mails, websites are not allowed";jsInclude(["js/plugin/validate/validate.js"]);jsIncludeCB(["js/popup/upload.js"], function(){ mainInit(); });
+</script>
+<div class="mexPopHide" id="mexPopupUpload">Your media has been successfully uploaded!</div>nerR inputBox"><textarea name="description"></textarea>
+<div class="errorPlaceInner"></div>
+</div>
+</div>
+<div class="formContainerRow hidePopComplete">
+    <div class="formContainerL labelBox"><label>set as selfie:</label></div>
+    <div class="formContainerR inputBox"><input class="gaClass" data-gaid="popupUploadWebcamSelfie" name="selfie" type="checkbox"/> <label class="helpTxt">&#40;displayed to everybody
+        in selfie area&#41;</label>
+        <div class="errorPlaceInner"></div>
+    </div>
+</div>
+<div class="formContainerRow hidePopComplete">
+    <div class="formContainerL labelBox"><label>set as private:</label></div>
+    <div class="formContainerR inputBox"><input class="gaClass" data-gaid="popupUploadWebcamPrivate" name="hotties" type="checkbox"/> <label class="helpTxt">&#40;available only for
+        your hotties network&#41;</label>
+        <div class="errorPlaceInner"></div>
+    </div>
+</div>
+<div class="formContainerRow">
+    <div class="btn02 subForm" id="subWebcam">submit</div>
+</div>
+</form>
+</div>
+</div>
+<div class="footerPopUpl">It is not allowed violent, offensive, copyrighted material, or images/videos of other people without their explicit consent.There are not allowed pictures/video of
+    children under 18 years old. The site is for adults only.If a user uploads sexually explicit pictures, must comply with the child protection and obscenity enforcement act &#40;Code 18 U.S.C.
+    2257 of the United States Code of Federal Regulations&#41; by identifying the name and address of the person who holds copies which prove that individuals in the pictures were over 18 years
+    oldwhen the pictures were taken. <a
+            href='http://www.gpo.gov/fdsys/search/pagedetails.action;jsessionid=HtXGVylGBP8pZcTxJFfxBDhV5CK3mSbJ4R8yDLbGyKT4DhyLGtQ3!1549446635!-1697915083?browsePath=Title+18%2FPart+I%2FChapter+110%2FSec.+2257A&granuleId=USCODE-2010-title18-partI-chap110-sec2257A&packageId=USCODE-2010-title18&collapse=true&fromBrowse=true'
+            target='_blank'>
+        Click here to read the full policy </a>.
+</div>
+</div>
+<script>
+    i18n["Unsupported file type!"] = "Unsupported file type!";i18n["Too big Image file! Please reduce the size of your photo using an image editor."] = "Too big Image file! Please reduce the size of your photo using an image editor.";i18n["This is a required field and cannot be empty"] = "This is a required field and cannot be empty";i18n["Titles containing phone numbers, e-mails, websites are not allowed."] = "Titles containing phone numbers, e-mails, websites are not allowed";i18n["Descriptions containing phone numbers, e-mails, websites are not allowed."] = "Descriptions containing phone numbers, e-mails, websites are not allowed";jsInclude(["js/plugin/validate/validate.js"]);jsIncludeCB(["js/popup/upload.js"], function(){ mainInit(); });
+
+</script>
+<div class="mexPopHide" id="mexPopupUpload">Your media has been successfully uploaded!</div>

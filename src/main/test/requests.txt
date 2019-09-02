@@ -1,0 +1,25 @@
+POST https://www.4club.com/register
+
+
+Host: www.4club.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:67.0) Gecko/20100101 Firefox/67.0
+Accept: application/json, text/javascript, */*; q=0.01
+Accept-Language: en-GB,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Referer: https://www.4club.com/
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+X-Requested-With: XMLHttpRequest
+Content-Length: 115
+DNT: 1
+Connection: keep-alive
+Cookie: PHPSESSID=2l6l7u7sdifqbk883k7tv4lo82
+Pragma: no-cache
+Cache-Control: no-cache
+
+BODY sex	f
+     email	ahagsdfjhasdjhf@mail.ru
+     password	asdfghggh
+     countryCode	RU
+     idCity	187191
+     age	18
+     sexPreferences[]	m

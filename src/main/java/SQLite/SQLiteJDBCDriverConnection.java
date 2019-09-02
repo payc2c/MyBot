@@ -46,7 +46,7 @@ public class SQLiteJDBCDriverConnection {
 
     public static void main(String[] args) throws Exception {
         Connection con = connect();
-        insert(con,null);
+        insert(con, null);
         select(con).forEach(System.out::println);
         con.close();
     }

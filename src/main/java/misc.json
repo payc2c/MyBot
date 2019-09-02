@@ -1,0 +1,36 @@
+{
+  "sexPreferences[]": "m",
+  "interests[]": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11"
+  ],
+  "age": "18",
+  "country": "RU",
+  "city": "Moscow",
+  "cityId": "187219",
+  "sentimentalStatus": "7",
+  "sexualOrientation": "1",
+  "playLevel[]": "5",
+  "height": "135",
+  "hairColor": "2",
+  "body": "1",
+  "eyeColor": "2",
+  "revenue": "4",
+  "occupation": "56",
+  "religion": "10",
+  "race": "8",
+  "languages[]": [
+    "4",
+    "17"
+  ],
+  "username": "Ala9203942"
+}

@@ -1,0 +1,56 @@
+1- "https://www.4club.com"
+
+2 - "https://www.4club.com/register"
+    Host: www.4club.com
+    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0
+    Accept: application/json, text/javascript, */*; q=0.01
+    Accept-Language: en-GB,en;q=0.5
+    Accept-Encoding: gzip, deflate, br
+    Referer: https://www.4club.com/
+    Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+    X-Requested-With: XMLHttpRequest
+    Content-Length: 110
+    DNT: 1
+    Connection: keep-alive
+    Cookie: PHPSESSID=2csapfj92lh0337krhq15dqu14
+    Pragma: no-cache
+    Cache-Control: no-cache
+
+    PL :
+    sex	f
+    email	dhajksdhgaj@mail.ru
+    password	daskfajs
+    countryCode	RU
+    idCity	187219
+    age	18
+    sexPreferences[]	m
+
+3-  https://www.4club.com/login
+    Host: www.4club.com
+    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0
+    Accept: application/json, text/javascript, */*; q=0.01
+    Accept-Language: en-GB,en;q=0.5
+    Accept-Encoding: gzip, deflate, br
+    Referer: https://www.4club.com/
+    Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+    X-Requested-With: XMLHttpRequest
+    Content-Length: 57
+    DNT: 1
+    Connection: keep-alive
+    Pragma: no-cache
+    Cache-Control: no-cache
+
+    PL:
+    email	asdfasdf@mail.ru
+    password	daskfajs
+    remember	false
+
+    {"Form data":{"sexPreferences[]":"m","interests[]":["1","2","3","4","5","6","7","8","9","10","11"],"age":"18","country":"RU","city":"Moscow","cityId":"187219","sentimentalStatus":"7","sexualOrientation":"1","playLevel[]":"5","height":"135","hairColor":"2","body":"1","eyeColor":"2","revenue":"4","occupation":"56","religion":"10","race":"8","languages[]":["4","17"],"username":"Vasuna89"}}
+
+    sex: m
+    email: asdfasert@mail.ru
+    password: asdasdgsdfg
+    countryCode: RU
+    idCity: 187219
+    age: 18
+    sexPreferences[]: f Z5GW6aKvm
