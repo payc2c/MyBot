@@ -61,13 +61,13 @@ public class YourSex extends Helpers {
         try (CloseableHttpClient httpClient = HttpClients.custom().setDefaultHeaders(HEADERS).setDefaultCookieStore(cookieStore).build()) {
             String queryParam;
             String encoding = "Windows-1251";
-            _get(HOME.getURL(), HOME, httpClient, encoding);
+            requestGet(HOME.getURL(), HOME, httpClient, encoding);
             Thread.sleep(500);
-            _get(LOGIN_PAGE.getURL(), LOGIN_PAGE, httpClient, encoding);
+            requestGet(LOGIN_PAGE.getURL(), LOGIN_PAGE, httpClient, encoding);
             Thread.sleep(500);
-            _post(LOGIN_USER.getURL(), LOGIN_USER, loginLoad(), httpClient, encoding);
+            requestPost(LOGIN_USER.getURL(), LOGIN_USER, loginLoad(), httpClient, encoding);
             Thread.sleep(500);
-            String response = _get(LOGIN_USER.getURL(), LOGIN_USER, httpClient, encoding);
+            String response = requestGet(LOGIN_USER.getURL(), LOGIN_USER, httpClient, encoding);
             if (response.contains("<div id=\"userlinks\">")) {
                 System.out.println("SUCCESSFUL");
             } else if (response.contains("errorwrap")) System.out.println("FAILURE_BLOCKED");
@@ -78,20 +78,20 @@ public class YourSex extends Helpers {
 
             Thread.sleep(500);
             queryParam = "?want=1&af=18&at=50&some_age=1&city_id=city-4400&for=0";
-            response = _get(ID_LIST.getURL() + queryParam, FIRST_BATCH_ID_LIST, httpClient, encoding);
+            response = requestGet(ID_LIST.getURL() + queryParam, FIRST_BATCH_ID_LIST, httpClient, encoding);
             extractIDs(response, true, false);
             Thread.sleep(500);
-            _get(MESSAGES.getURL(), MESSAGES, httpClient, encoding);
+            requestGet(MESSAGES.getURL(), MESSAGES, httpClient, encoding);
             Thread.sleep(500);
             queryParam = "?want=1&af=18&at=50&some_age=1&city_id=city-4962&for=0";
             //SPB city-4962
             //MSK city-4400
-            response = _post(HOME.getURL() + queryParam, ID_LIST, idLoad("", ""), httpClient, encoding);
+            response = requestPost(HOME.getURL() + queryParam, ID_LIST, idLoad("", ""), httpClient, encoding);
             extractIDs(response, false, false);
             int max = 10000;
             try {
                 for (int i = 48; i < max; i = i + 24) {
-                    response = _post(HOME.getURL() + queryParam, ID_LIST, idLoad("anks", String.valueOf(i)), httpClient, encoding);
+                    response = requestPost(HOME.getURL() + queryParam, ID_LIST, idLoad("anks", String.valueOf(i)), httpClient, encoding);
                     extractIDs(response, false, false);
                     System.out.println();
                 }
@@ -113,7 +113,7 @@ public class YourSex extends Helpers {
 
     //act=xmlout&do=add-dialog-message&PHPSESSID=id294htrgrb149895lq45i8ars&JsHttpRequest=1551924615972419-form
     private String sendMessage(String url, Stages stage, String payLoad, CloseableHttpClient client) throws Exception {
-        message = "Првиет, не хочешь познакомится ближе, я занимаюсь интим услуами (индивидуалка) вот мой номер вотсапа и Вайбера 9774020155, пиши, всегда отвечу, отправлю фото и видео, могувирт";
+        message = "";
         String phpSID = cookieStore.getCookies().stream().filter(c -> c.getName().equalsIgnoreCase("PHPSESSID")).findAny().get().getValue();
         String load = String.format(payLoad, phpSID, String.valueOf(System.currentTimeMillis()));
         String entityString = null;

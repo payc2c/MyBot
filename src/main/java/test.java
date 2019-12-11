@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 public class test {
-    public static void main(String[] args) throws Exception {
-        String json = new String(Files.readAllBytes(Paths.get("C:\\Users\\Zim\\IdeaProjects\\AnotherBot\\src\\main\\java\\misc.json")));
+    void test1() throws Exception {
+        String json = new String(Files.readAllBytes(Paths.get("C:\\Users\\Zim\\IdeaProjects\\AnotherBot\\src\\main\\java\\RegisterData.json")));
         Gson gson = new Gson();
         Map<String, Object> map = gson.fromJson(json, Map.class);
         List<BasicNameValuePair> list = new ArrayList<>();
@@ -21,6 +21,9 @@ public class test {
             }
         });
         list.forEach(System.out::println);
+    }
+
+    public static void main(String[] args) throws Exception {
     }
 
 
