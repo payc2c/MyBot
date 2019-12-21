@@ -40,7 +40,7 @@ public class FourClub extends Helpers {
 
     void run() {
         _setPrintHeaders(true);
-        _setApacheLogs(true);
+        _setApacheLogs(false);
         Map<String, Object> response;
         try (CloseableHttpClient httpClient = HttpClients.custom().setDefaultHeaders(HEADERS).setDefaultCookieStore(cookieStore).build()) {
             _get(HOME.getURL(), HOME, httpClient);
