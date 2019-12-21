@@ -1,6 +1,7 @@
 package MainPackage;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.CookieStore;
@@ -18,43 +19,84 @@ import org.apache.http.util.EntityUtils;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static MainPackage.FourClub.Stages.*;
 
 public class FourClub extends Helpers {
-    private static final String[] INITIAL_HEADERS = {"Host: www.4club.com", "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:67.0) Gecko/20100101 Firefox/67.0", "Accept: application/json, text/javascript, */*; q=0.01", "Accept-Language: en-GB,en;q=0.5", "Accept-Encoding: gzip, deflate, br", "X-Requested-With: XMLHttpRequest", "Connection: keep-alive", "Pragma: no-cache", "Cache-Control: no-cache"};
-    private static List<BasicHeader> HEADERS = new ArrayList<>();
+    private static final String[] INITIAL_HEADERS = {"Host: www.4club.com", "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:67.0) Gecko/20100101 Firefox/67.0", "Accept: application/json, " +
+            "text/javascript, */*; q=0.01", "Accept-Language: en-GB,en;q=0.5", "Accept-Encoding: gzip, deflate, br", "X-Requested-With: XMLHttpRequest", "Connection: keep-alive", "Pragma: no-cache", "Cache-Control: no-cache"};
+    private List<BasicHeader> HEADERS;
     private String userName;
     private String password;
+    private String phoneLogin;
     private CookieStore cookieStore = new BasicCookieStore();
-
-    public FourClub(String userName, String password) {
+    private Set<String> idSet = new HashSet<>();
+    private String cities = " Moscow | 187219|\n" +
+            "    (Sankt-Peterburg)|100787|66\n" +
+            "    Novosibirsk (Novosibirsk)|495117|53\n" +
+            "    Yekaterinburg (Sverdlovsk)|463211|71\n" +
+            "    Novgorod (Novgorod)|168511|52\n" +
+            "    Samara (Samara)|101664|65\n" +
+            "    Omsk (Omsk)|492924|54\n" +
+            "    Kazan (Tatarstan)|272141|73\n" +
+            "    Chelyabinsk (Tsjeljabinsk)|532314|13\n" +
+            "    Rostov-na-Donu (Rostov)|108520|61\n" +
+            "    Ufa (Perm)|852336|90\n" +
+            "    Volgograd (Volgograd)|27848|84\n" +
+            "    Perm’ (Perm)|141178|90\n" +
+            "    Krasnoyarsk (Krasnoyarskiy)|512514|91\n" +
+            "    Voronezh (Voronezj)|26161|86\n" +
+            "    Saratov (Saratov)|100297|67\n" +
+            "    Krasnodar (Krasnodarskiy)|243292|38\n" +
+            "    Tolyatti (Samara)|49617|65\n" +
+            "Vladivostok (Primorskiy)|565470|59 "+
+            "Russian Federation|855784|00";
+    public FourClub(String userName, String password, String phoneLogin) {
         this.userName = userName;
         this.password = password;
-        HEADERS.addAll(Arrays.asList(_toHeader(INITIAL_HEADERS)));
+        this.phoneLogin = phoneLogin;
+        HEADERS = new ArrayList<>(Arrays.asList(_toHeader(INITIAL_HEADERS)));
     }
 
-    void run() {
-        _setPrintHeaders(true);
+    String run() throws Exception{
+        _setPrintHeaders(false);
         _setApacheLogs(false);
-        Map<String, Object> response;
         try (CloseableHttpClient httpClient = HttpClients.custom().setDefaultHeaders(HEADERS).setDefaultCookieStore(cookieStore).build()) {
-            _get(HOME.getURL(), HOME, httpClient);
+            requestGet(HOME.getURL(), HOME, httpClient);
+            try {
+                checkSuc(_postWithJson(REGISTER.getURL(), REGISTER, registerLoad(), httpClient));
+            } catch (Exception e) {
+                Thread.sleep(10000);
+                return null;
+            }
             checkSuc(_postWithJson(LOGIN.getURL(), LOGIN, loginLoad(userName, password), httpClient));
-            // checkSuc(_postWithJson(REGISTER.getURL(), REGISTER, registerLoad(), httpClient));
-            _get(MY_PROFILE.getURL(), MY_PROFILE, httpClient);
-            checkSuc(_postWithJson(SET_PROFILE.getURL(), SET_PROFILE, profileLoad(), httpClient));
-            _get(PHOTO.getURL(), PHOTO, httpClient);
+            requestGet(MY_PROFILE.getURL(), MY_PROFILE, httpClient);
+            while (!checkSuc(_postWithJson(SET_PROFILE.getURL(), SET_PROFILE, profileLoad(), httpClient)))
+            //_get(PHOTO.getURL(), PHOTO, httpClient);
+
+            //checkSuc(_postWithJson(SEND_MESSAGE.getURL(), SEND_MESSAGE, messageLoad(), httpClient, new BasicHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")));
+           /* for (String[] city: cityCodes) {
+                try {
+                    extractIds(checkSuc(_postWithJson(ONLINE_LIST.getURL(), ONLINE_LIST, onlineSearchLoad(city), httpClient)));
+
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }*/
+            System.out.println(idSet);
+            System.out.println(idSet.size());
+            httpClient.close();
+            return userName;
             //checkSuc(_getJsonMap(postPic(UPLOAD_PHOTO.getURL(), UPLOAD_PHOTO, "1234", httpClient)));
             //_get(REGISTER_REDIR.getURL(), REGISTER_REDIR, httpClient);
             //if (response.get("result").equals(false)) throw new Error(response.get("errors").toString());
         } catch (Exception e) {
             e.printStackTrace();
+            throw e;
         }
+       // return null;
     }
 
     private List<BasicNameValuePair> loginLoad(String userName, String password) {
@@ -79,26 +121,32 @@ public class FourClub extends Helpers {
         return load;
     }
 
-    private void checkSuc(Map<String, Object> response) {
-        if ((boolean) response.get("result") == true) System.out.println("SUC");
+    private boolean checkSuc(JsonObject response) {
+        try {
+            if (response.get("result").getAsBoolean() == true) return true;
+            System.out.println("SUC");
+        } catch (Exception e) {
+            try{
+
+                if (response.get("result").getAsJsonObject().get("result").getAsBoolean() == true) return true;
+                System.out.println("SUC");
+            }catch (Exception e1){
+                //System.out.println(response.toString());
+                return false;
+            }
+        }
+        return false;
     }
 
     /**
      * Not working
-     *
-     * @param url
-     * @param stage
-     * @param payload
-     * @param client
-     * @return
-     * @throws Exception
      */
     private String postPic(String url, Stages stage, String payload, CloseableHttpClient client) throws Exception {
         HttpPost post = new HttpPost(url);
         post.removeHeaders("Content-Type");
         post.addHeader("Content-Type", "multipart/form-data");
         String entityString;
-        File file = new File("C:\\Users\\Zim\\IdeaProjects\\AnotherBot\\src\\main\\java\\stoya.jpg");
+        File file = new File(_getFromDocs("stoya.jpg"));
         System.out.println(file.getName());
         String encoding = "UTF-8";
         HttpEntity entity = MultipartEntityBuilder.create().setContentType(ContentType.MULTIPART_FORM_DATA)
@@ -108,13 +156,13 @@ public class FourClub extends Helpers {
                 .addTextBody("title", payload)
                 .build();
         post.setEntity(entity);
-        _printHeaders(post.getAllHeaders(), stage);
+        _printHeaders(post.getAllHeaders(), stage, true);
 
         try (CloseableHttpResponse response = client.execute(post)) {
             System.out.println(response.getStatusLine());
             entity = response.getEntity();
             entityString = IOUtils.toString(entity.getContent(), encoding);
-            _printHeaders(response.getAllHeaders(), stage);
+            _printHeaders(response.getAllHeaders(), stage, false);
             _writeFile(entityString, stage, encoding);
             EntityUtils.consume(entity);
         }
@@ -122,9 +170,10 @@ public class FourClub extends Helpers {
     }
 
     private List<BasicNameValuePair> profileLoad() throws Exception {
-        String json = new String(Files.readAllBytes(Paths.get("C:\\Users\\Zim\\IdeaProjects\\AnotherBot\\src\\main\\java\\misc.json")));
+        String json = new String(Files.readAllBytes(Paths.get(_getFromDocs("RegisterData.json"))));
         Gson gson = new Gson();
         Map<String, Object> map = gson.fromJson(json, Map.class);
+        map.put("username", randomiseLogin(phoneLogin));
         List<BasicNameValuePair> list = new ArrayList<>();
         map.forEach((String k, Object v) -> {
             if (k.equalsIgnoreCase("interests[]") || k.equalsIgnoreCase("languages[]")) {
@@ -136,19 +185,76 @@ public class FourClub extends Helpers {
         return list;
     }
 
+    /*
+    Moscow | 187219|
+    Sankt-Peterburg|100787|66
+    Novosibirsk (Novosibirsk)|495117|53
+    Yekaterinburg (Sverdlovsk)|463211|71
+    Novgorod (Novgorod)|168511|52
+    Samara (Samara)|101664|65
+    Omsk (Omsk)|492924|54
+    Kazan (Tatarstan)|272141|73
+    Chelyabinsk (Tsjeljabinsk)|532314|13
+    Rostov-na-Donu (Rostov)|108520|61
+    Ufa (Perm)|852336|90
+    Volgograd (Volgograd)|27848|84
+    Perm’ (Perm)|141178|90
+    Krasnoyarsk (Krasnoyarskiy)|512514|91
+    Voronezh (Voronezj)|26161|86
+    Saratov (Saratov)|100297|67
+    Krasnodar (Krasnodarskiy)|243292|38
+    Tolyatti (Samara)|49617|65
+     */
+    private List<BasicNameValuePair> onlineSearchLoad(String[] city) {
+        List<BasicNameValuePair> load = new ArrayList<>();
+
+        load.add(new BasicNameValuePair("type", "base"));
+        load.add(new BasicNameValuePair("sexualOrientation", "1"));
+        load.add(new BasicNameValuePair("sex[]", "m"));
+        load.add(new BasicNameValuePair("ageFrom", "18"));
+        load.add(new BasicNameValuePair("ageTo", "90"));
+        load.add(new BasicNameValuePair("country", "RU"));
+        load.add(new BasicNameValuePair("city", city[0]));
+        load.add(new BasicNameValuePair("cityId", city[1]));
+        load.add(new BasicNameValuePair("online", "1"));
+        load.add(new BasicNameValuePair("hasPhoto", ""));
+        load.add(new BasicNameValuePair("videoChat", ""));
+        return load;
+    }
+
+    private void extractIds(Map<String, Object> response) {
+        List<Map<String, Object>> list = (List) response.get("users");
+        list.forEach(u -> idSet.add((String) u.get("userid")));
+        //System.out.println(idSet);
+    }
+
+    private List<String[]> getCityCodes() {
+        return Arrays.stream(cities.split("\\n")).map(s -> s.split("\\|")).map(s -> new String[]{s[0].trim().split("\\s")[0].replace("(", "").replace(")", ""), s[1].trim()}).collect(Collectors.toList());
+    }
+
+    private List<BasicNameValuePair> messageLoad() throws Exception {
+        String ll = new String(Files.readAllBytes(Paths.get(_getFromDocs("Message.txt"))), "UTF-8");
+        System.out.println(ll);
+        String load = "Карма Сука";
+
+        List<BasicNameValuePair> list = new ArrayList<>();
+        list.add(new BasicNameValuePair("userid", "102098638"));
+        list.add(new BasicNameValuePair("message", load));
+        return list;
+    }
+
     enum Stages {
         HOME("https://www.4club.com"),
-        REGISTER_REDIR("https://www.4club" +
-                ".com/loging/5cb4eb35337d18917ddabce5ac21a5cf0638a47dc154e0206242e62d3207f8aed0456d231d835d4c2090e2c733c8f3f5843cecf79bddfc38796ab8d2ca3435ca3d343f3c9411d8ca398826cd31e3dd8643b65eb2f9f657bc376b3423f06a108eb5de2a94f8fc1816a060fd63cc0aa848"),
         REGISTER("https://www.4club.com/register"),
         LOGIN("https://www.4club.com/login"),
         SET_PROFILE("https://www.4club.com/myprofile/save"),
         MY_PROFILE("https://www.4club.com/myprofile"),
         PHOTO("https://www.4club.com/popup/uploadmedia/photo"),
+        ONLINE_LIST("https://www.4club.com/search/result/online"),
         UPLOAD_PHOTO("https://www.4club.com/media/uploadphoto"),
         MESSAGES("https://www.yoursex.ru/messages.html"),
-        SEND_MESSAGE("https://www.yoursex.ru/index.php"),
-        ID_SET(""),
+        SEND_MESSAGE("https://www.4club.com/message/send"),
+        NEW_FACES("https://www.4club.com/search/result/newfaces"),
         SPAMMED_ID_SET("");
 
         private String URL;

@@ -1,7 +1,9 @@
 package MainPackage;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -20,7 +22,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 public class Helpers {
     private static boolean printHeaders = false;
@@ -35,18 +36,26 @@ public class Helpers {
         }
     }
 
-    static String _post(String url, Enum stage, List<BasicNameValuePair> params, CloseableHttpClient client, String encoding) throws Exception {
+    protected String requestPost(String url, Enum stage, List<BasicNameValuePair> params, CloseableHttpClient client, String encoding, Header... headers) throws Exception {
         HttpPost httpPost = new HttpPost(url);
         String entityString;
-        httpPost.setEntity(new UrlEncodedFormEntity(params));
-        if (printHeaders) _printHeaders(httpPost.getAllHeaders(), stage);
+        if (headers != null) {
+            for (Header h : headers) {
+                httpPost.removeHeaders(h.getName());
+            }
+            httpPost.setHeaders(headers);
+        }
+        httpPost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
+        if (printHeaders) _printHeaders(httpPost.getAllHeaders(), stage, true);
+        System.out.println(params);
         try (CloseableHttpResponse response = client.execute(httpPost)) {
-            //System.out.println(response.getStatusLine());
+            System.out.println(response.getStatusLine());
             HttpEntity entity = response.getEntity();
             entityString = IOUtils.toString(entity.getContent(), encoding);
-            if (printHeaders) _printHeaders(response.getAllHeaders(), stage);
             _writeFile(entityString, stage, encoding);
+            if (printHeaders) _printHeaders(response.getAllHeaders(), stage, false);
             EntityUtils.consume(entity);
+            httpPost.releaseConnection();
         }
         return entityString;
     }
@@ -54,31 +63,31 @@ public class Helpers {
     /**
      * With default UTF-8 Encoding
      *
-     * @param url
-     * @param stage
-     * @param client
-     * @return
-     * @throws Exception
      */
-    static String _post(String url, Enum stage, List<BasicNameValuePair> params, CloseableHttpClient client) throws Exception {
-        return _post(url, stage, params, client, "UTF-8");
+    protected String requestPost(String url, Enum stage, List<BasicNameValuePair> params, CloseableHttpClient client, Header... headers) throws Exception {
+        return requestPost(url, stage, params, client, "UTF-8", headers);
     }
 
-    static Map<String, Object> _postWithJson(String url, Enum stage, List<BasicNameValuePair> params, CloseableHttpClient client) throws Exception {
-        return _getJsonMap(_post(url, stage, params, client, "UTF-8"));
+    protected JsonObject _postWithJson(String url, Enum stage, List<BasicNameValuePair> params, CloseableHttpClient client, Header... headers) throws Exception {
+        try{
+            return _getJsonMap(requestPost(url, stage, params, client, "UTF-8", headers));
+        }catch (Exception e) {
+            return null;
+        }
     }
 
-    static String _get(String url, Enum stage, CloseableHttpClient client, String encoding) throws Exception {
+    protected String requestGet(String url, Enum stage, CloseableHttpClient client, String encoding) throws Exception {
         String entityString;
         HttpGet httpGet = new HttpGet(url);
-        if (printHeaders) _printHeaders(httpGet.getAllHeaders(), stage);
+        if (printHeaders) _printHeaders(httpGet.getAllHeaders(), stage, true);
 
         try (CloseableHttpResponse response = client.execute(httpGet)) {
             HttpEntity entity = response.getEntity();
             entityString = IOUtils.toString(entity.getContent(), encoding);
-            if (printHeaders) _printHeaders(response.getAllHeaders(), stage);
+            if (printHeaders) _printHeaders(response.getAllHeaders(), stage, false);
             _writeFile(entityString, stage, encoding);
             EntityUtils.consume(entity);
+            httpGet.releaseConnection();
         }
         return entityString;
     }
@@ -92,17 +101,16 @@ public class Helpers {
      * @return
      * @throws Exception
      */
-    static String _get(String url, Enum stage, CloseableHttpClient client) throws Exception {
-        return _get(url, stage, client, "UTF-8");
+    protected String requestGet(String url, Enum stage, CloseableHttpClient client) throws Exception {
+        return requestGet(url, stage, client, "UTF-8");
     }
 
-    static Map<String, Object> _getWithJson(String url, Enum stage, CloseableHttpClient client) throws Exception {
-        return _getJsonMap(_get(url, stage, client, "UTF-8"));
+    protected JsonObject _getWithJson(String url, Enum stage, CloseableHttpClient client) throws Exception {
+        return _getJsonMap(requestGet(url, stage, client, "UTF-8"));
     }
 
-    static Map<String, Object> _getJsonMap(String json) {
-        Gson gson = new Gson();
-        return gson.fromJson(json, Map.class);
+    static JsonObject _getJsonMap(String json) {
+        return new Gson().fromJson(json, JsonObject.class);
     }
 
     static void _writeFile(String response, Enum fileName, String encoding) throws Exception {
@@ -126,21 +134,36 @@ public class Helpers {
         return headers;
     }
 
-    static void _printHeaders(Header[] headers, Enum e) {
-        System.out.println(e.name());
+    static void _printHeaders(Header[] headers, Enum e, boolean isRequest) {
+        System.out.println(e.name() + (isRequest ? " REQUEST" : " RESPONSE"));
         Arrays.stream(headers).forEach(h -> System.out.println(h.getName() + ":" + h.getValue()));
         System.out.println("--------------------------------");
     }
 
-    static void _setApacheLogs(boolean b) {
-        if (b) {
+    static String _getFromDocs(String filename) {
+        return Paths.get(Paths.get("").toAbsolutePath().toString() + "\\src\\main\\java\\Docs\\" + filename).toString();
+    }
+
+    static void _setApacheLogs(boolean isEnabled) {
+        if (isEnabled) {
             System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.SimpleLog");
             System.setProperty("org.apache.commons.logging.simplelog.showdatetime", "true");
-            // System.setProperty("org.apache.commons.logging.simplelog.log.org.apache.http.client", "DEBUG");
-            System.setProperty("org.apache.commons.logging.simplelog.log.org.apache.http.wire", "DEBUG");
-           /* System.setProperty("org.apache.commons.logging.simplelog.log.org.apache.http.impl.conn","DEBUG");
-            System.setProperty("org.apache.commons.logging.simplelog.log.org.apache.http.impl.client","DEBUG");
-            System.setProperty("org.apache.commons.logging.simplelog.log.org.apache.http.client","DEBUG");*/
+            //System.setProperty("org.apache.commons.logging.simplelog.log.org.apache.http.client", "DEBUG");
+            System.setProperty("org.apache.commons.logging.simplelog.log.org.apache.http.wire", "ERROR");
+            System.setProperty("org.apache.commons.logging.simplelog.log.org.apache.http", "DEBUG");
+
+            //System.setProperty("org.apache.commons.logging.simplelog.log.org.apache.http.impl.conn","DEBUG");
+            //System.setProperty("org.apache.commons.logging.simplelog.log.org.apache.http.impl.client","DEBUG");
+            //System.setProperty("org.apache.commons.logging.simplelog.log.org.apache.http.client","DEBUG");
         }
+    }
+
+    static String randomiseLogin(String phoneNumber) {
+        int pos = (int) ((Math.random() * (8 - 3)) + 3);
+        return phoneNumber.substring(0, pos) + RandomStringUtils.randomAlphabetic(2) + phoneNumber.substring(pos);
+    }
+
+    static String getRandomEmail(){
+        return RandomStringUtils.randomAlphanumeric(13) + "@mail.ru";
     }
 }
