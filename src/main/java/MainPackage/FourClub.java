@@ -28,12 +28,10 @@ public class FourClub extends Helpers {
     private static final String[] INITIAL_HEADERS = {"Host: www.4club.com", "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:67.0) Gecko/20100101 Firefox/67.0", "Accept: application/json, " +
             "text/javascript, */*; q=0.01", "Accept-Language: en-GB,en;q=0.5", "Accept-Encoding: gzip, deflate, br", "X-Requested-With: XMLHttpRequest", "Connection: keep-alive", "Pragma: no-cache", "Cache-Control: no-cache"};
     private List<BasicHeader> HEADERS;
-    private String userName;
-    private String password;
-    private String phoneLogin;
+    final private Account account;
     private CookieStore cookieStore = new BasicCookieStore();
     private Set<String> idSet = new HashSet<>();
-    private String cities = " Moscow | 187219|\n" +
+    private static final String cities = " Moscow | 187219|\n" +
             "    (Sankt-Peterburg)|100787|66\n" +
             "    Novosibirsk (Novosibirsk)|495117|53\n" +
             "    Yekaterinburg (Sverdlovsk)|463211|71\n" +
@@ -51,59 +49,80 @@ public class FourClub extends Helpers {
             "    Saratov (Saratov)|100297|67\n" +
             "    Krasnodar (Krasnodarskiy)|243292|38\n" +
             "    Tolyatti (Samara)|49617|65\n" +
-            "Vladivostok (Primorskiy)|565470|59 "+
+            "Vladivostok (Primorskiy)|565470|59 " +
             "Russian Federation|855784|00";
-    public FourClub(String userName, String password, String phoneLogin) {
-        this.userName = userName;
-        this.password = password;
-        this.phoneLogin = phoneLogin;
-        HEADERS = new ArrayList<>(Arrays.asList(_toHeader(INITIAL_HEADERS)));
-    }
 
-    String run() throws Exception{
+    public FourClub(Account account) {
+        this.account = account;
+        HEADERS = new ArrayList<>(Arrays.asList(_toHeader(INITIAL_HEADERS)));
         _setPrintHeaders(false);
         _setApacheLogs(false);
+
+    }
+
+
+    public Account regiserAcc() throws Exception {
+        boolean setProfileFailure = false;
         try (CloseableHttpClient httpClient = HttpClients.custom().setDefaultHeaders(HEADERS).setDefaultCookieStore(cookieStore).build()) {
             requestGet(HOME.getURL(), HOME, httpClient);
-            try {
-                checkSuc(_postWithJson(REGISTER.getURL(), REGISTER, registerLoad(), httpClient));
-            } catch (Exception e) {
-                Thread.sleep(10000);
+            JsonObject registerResponse = _postWithJson(REGISTER.getURL(), REGISTER, registerLoad(), httpClient);
+            if (registerResponse != null && checkSuc(registerResponse))
+                System.out.printf("%s закончена с логином - %s и паролем - %s\n", REGISTER.name(), account.getEmail(), account.getPassword());
+            else {
+                System.out.printf("Проблемы с аком %s : %s\n", account.getEmail(), account.getPassword());
+                if (registerResponse != null) System.out.println(registerResponse.toString());
                 return null;
             }
-            checkSuc(_postWithJson(LOGIN.getURL(), LOGIN, loginLoad(userName, password), httpClient));
+            if (!checkSuc(_postWithJson(LOGIN.getURL(), LOGIN, loginLoad(account.getEmail(), account.getPassword()), httpClient)))
+                return null;
             requestGet(MY_PROFILE.getURL(), MY_PROFILE, httpClient);
-            while (!checkSuc(_postWithJson(SET_PROFILE.getURL(), SET_PROFILE, profileLoad(), httpClient)))
+            int i = 0;
+            do {
+                String randomLogin = account.getRandomLogin();
+                setProfileFailure = !checkSuc(_postWithJson(SET_PROFILE.getURL(), SET_PROFILE, profileLoad(randomLogin), httpClient));
+                i++;
+                if (setProfileFailure){
+                    System.out.printf("Не удалось зарегистрировать акк - %s. Попыток - %d\n", randomLogin, i);
+                    account.setRandomLogin();
+                }
+
+            } while (setProfileFailure && i < 10);
+            return account;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    Account run() throws Exception {
+        try (CloseableHttpClient httpClient = HttpClients.custom().setDefaultHeaders(HEADERS).setDefaultCookieStore(cookieStore).build()) {
+            requestGet(HOME.getURL(), HOME, httpClient);
+            checkSuc(_postWithJson(LOGIN.getURL(), LOGIN, loginLoad(account.getEmail(), account.getPassword()), httpClient));
+            requestGet(MY_PROFILE.getURL(), MY_PROFILE, httpClient);
             //_get(PHOTO.getURL(), PHOTO, httpClient);
 
-            //checkSuc(_postWithJson(SEND_MESSAGE.getURL(), SEND_MESSAGE, messageLoad(), httpClient, new BasicHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")));
-           /* for (String[] city: cityCodes) {
-                try {
-                    extractIds(checkSuc(_postWithJson(ONLINE_LIST.getURL(), ONLINE_LIST, onlineSearchLoad(city), httpClient)));
-
-                }catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }*/
+            for (String city : cities.split("\\n")) {
+                extractIds(_postWithJson(ONLINE_LIST.getURL(), ONLINE_LIST, onlineSearchLoad(city.trim().split("\\|")), httpClient));
+            }
+            for (String id : idSet) {
+                checkSuc(_postWithJson(SEND_MESSAGE.getURL(), SEND_MESSAGE, messageLoad(id), httpClient, new BasicHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")));
+            }
             System.out.println(idSet);
             System.out.println(idSet.size());
             httpClient.close();
-            return userName;
-            //checkSuc(_getJsonMap(postPic(UPLOAD_PHOTO.getURL(), UPLOAD_PHOTO, "1234", httpClient)));
-            //_get(REGISTER_REDIR.getURL(), REGISTER_REDIR, httpClient);
-            //if (response.get("result").equals(false)) throw new Error(response.get("errors").toString());
+            return account;
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
         }
-       // return null;
+        // return null;
     }
 
     private List<BasicNameValuePair> loginLoad(String userName, String password) {
         List<BasicNameValuePair> load = new ArrayList<>();
 
         load.add(new BasicNameValuePair("email", userName));
-        load.add(new BasicNameValuePair("password", password));
+        load.add(new BasicNameValuePair("password", account.getPassword()));
         load.add(new BasicNameValuePair("remember", "false"));
         return load;
     }
@@ -111,8 +130,8 @@ public class FourClub extends Helpers {
     private List<BasicNameValuePair> registerLoad() {
         List<BasicNameValuePair> load = new ArrayList<>();
         load.add(new BasicNameValuePair("sex", "f"));
-        load.add(new BasicNameValuePair("email", userName));
-        load.add(new BasicNameValuePair("password", password));
+        load.add(new BasicNameValuePair("email", account.getEmail()));
+        load.add(new BasicNameValuePair("password", account.getPassword()));
         load.add(new BasicNameValuePair("countryCode", "RU"));
         // Moscow
         load.add(new BasicNameValuePair("idCity", "187219"));
@@ -123,14 +142,18 @@ public class FourClub extends Helpers {
 
     private boolean checkSuc(JsonObject response) {
         try {
-            if (response.get("result").getAsBoolean() == true) return true;
-            System.out.println("SUC");
+            if (response.get("result").getAsBoolean()) {
+                //System.out.println("SUC");
+                return true;
+            }
         } catch (Exception e) {
-            try{
+            try {
 
-                if (response.get("result").getAsJsonObject().get("result").getAsBoolean() == true) return true;
-                System.out.println("SUC");
-            }catch (Exception e1){
+                if (response.get("result").getAsJsonObject().get("result").getAsBoolean()) {
+                    // System.out.println("SUC");
+                    return true;
+                }
+            } catch (Exception e1) {
                 //System.out.println(response.toString());
                 return false;
             }
@@ -169,11 +192,11 @@ public class FourClub extends Helpers {
         return entityString;
     }
 
-    private List<BasicNameValuePair> profileLoad() throws Exception {
+    private List<BasicNameValuePair> profileLoad(String phoneLogin) throws Exception {
         String json = new String(Files.readAllBytes(Paths.get(_getFromDocs("RegisterData.json"))));
         Gson gson = new Gson();
         Map<String, Object> map = gson.fromJson(json, Map.class);
-        map.put("username", randomiseLogin(phoneLogin));
+        map.put("username", phoneLogin);
         List<BasicNameValuePair> list = new ArrayList<>();
         map.forEach((String k, Object v) -> {
             if (k.equalsIgnoreCase("interests[]") || k.equalsIgnoreCase("languages[]")) {
@@ -222,7 +245,7 @@ public class FourClub extends Helpers {
         return load;
     }
 
-    private void extractIds(Map<String, Object> response) {
+    private void extractIds(JsonObject response) {
         List<Map<String, Object>> list = (List) response.get("users");
         list.forEach(u -> idSet.add((String) u.get("userid")));
         //System.out.println(idSet);
@@ -232,13 +255,13 @@ public class FourClub extends Helpers {
         return Arrays.stream(cities.split("\\n")).map(s -> s.split("\\|")).map(s -> new String[]{s[0].trim().split("\\s")[0].replace("(", "").replace(")", ""), s[1].trim()}).collect(Collectors.toList());
     }
 
-    private List<BasicNameValuePair> messageLoad() throws Exception {
+    private List<BasicNameValuePair> messageLoad(String id) throws Exception {
         String ll = new String(Files.readAllBytes(Paths.get(_getFromDocs("Message.txt"))), "UTF-8");
         System.out.println(ll);
         String load = "Карма Сука";
-
+// mock id 102098638
         List<BasicNameValuePair> list = new ArrayList<>();
-        list.add(new BasicNameValuePair("userid", "102098638"));
+        list.add(new BasicNameValuePair("userid", id));
         list.add(new BasicNameValuePair("message", load));
         return list;
     }

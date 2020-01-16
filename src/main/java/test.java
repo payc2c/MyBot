@@ -1,30 +1,82 @@
-import com.google.gson.Gson;
-import org.apache.http.message.BasicNameValuePair;
-
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.concurrent.*;
 
 public class test {
-    void test1() throws Exception {
-        String json = new String(Files.readAllBytes(Paths.get("C:\\Users\\Zim\\IdeaProjects\\AnotherBot\\src\\main\\java\\RegisterData.json")));
-        Gson gson = new Gson();
-        Map<String, Object> map = gson.fromJson(json, Map.class);
-        List<BasicNameValuePair> list = new ArrayList<>();
-        map.forEach((String k, Object v) -> {
-            if (k.equalsIgnoreCase("interests[]") || k.equalsIgnoreCase("languages[]")) {
-                ((List) v).forEach(s -> list.add(new BasicNameValuePair(k, String.valueOf(s))));
-            } else {
-                list.add(new BasicNameValuePair(k, String.valueOf(v)));
+
+    class CalcResult {
+        long result;
+
+        CalcResult(long l) {
+            result = l;
+        }
+    }
+
+    class CallableTask implements Callable<CalcResult> {
+        String taskName;
+        long input1;
+        int input2;
+
+        CallableTask(String name, long v1, int v2) {
+            taskName = name;
+            input1 = v1;
+            input2 = v2;
+        }
+
+        public CalcResult call() throws Exception {
+            System.out.println(" Task " + taskName + " Started -----");
+            for (int i = 0; i < input2; i++) {
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    System.out.println(" Task " + taskName + " Interrupted !! ");
+                    e.printStackTrace();
+                }
+                input1 += i;
             }
-        });
-        list.forEach(System.out::println);
+            System.out.println(" Task " + taskName + " Completed @@@@@@");
+            return new CalcResult(input1);
+        }
+
     }
 
-    public static void main(String[] args) throws Exception {
+    public void test() {
+        ExecutorService taskExecutor = Executors.newFixedThreadPool(3);
+        CompletionService<CalcResult> taskCompletionService = new ExecutorCompletionService<>(taskExecutor);
+
+        int submittedTasks = 5;
+        for (int i = 0; i < submittedTasks; i++) {
+            taskCompletionService.submit(new CallableTask(
+                    String.valueOf(i),
+                    (i * 10),
+                    ((i * 10) + 10)
+            ));
+            System.out.println("Task " + String.valueOf(i) + "subitted");
+        }
+        for (int tasksHandled = 0; tasksHandled < submittedTasks; tasksHandled++) {
+            try {
+                System.out.println("trying to take from Completion service");
+                Future<CalcResult> result = taskCompletionService.take();
+                System.out.println("result for a task availble in queue.Trying to get()");
+                // above call blocks till atleast one task is completed and results availble for it
+                // but we dont have to worry which one
+
+                // process the result here by doing result.get()
+                CalcResult l = result.get();
+                System.out.println("Task " + String.valueOf(tasksHandled) + "Completed - results obtained : " + String.valueOf(l.result));
+
+            } catch (InterruptedException e) {
+                // Something went wrong with a task submitted
+                System.out.println("Error Interrupted exception");
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                // Something went wrong with the result
+                e.printStackTrace();
+                System.out.println("Error get() threw exception");
+            }
+        }
     }
 
-
+    public static void main(String... args) {
+        test test = new test();
+        test.test();
+    }
 }

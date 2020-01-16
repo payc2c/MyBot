@@ -22,6 +22,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.*;
 
 public class Helpers {
     private static boolean printHeaders = false;
@@ -47,9 +48,7 @@ public class Helpers {
         }
         httpPost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
         if (printHeaders) _printHeaders(httpPost.getAllHeaders(), stage, true);
-        System.out.println(params);
         try (CloseableHttpResponse response = client.execute(httpPost)) {
-            System.out.println(response.getStatusLine());
             HttpEntity entity = response.getEntity();
             entityString = IOUtils.toString(entity.getContent(), encoding);
             _writeFile(entityString, stage, encoding);
@@ -60,18 +59,11 @@ public class Helpers {
         return entityString;
     }
 
-    /**
-     * With default UTF-8 Encoding
-     *
-     */
-    protected String requestPost(String url, Enum stage, List<BasicNameValuePair> params, CloseableHttpClient client, Header... headers) throws Exception {
-        return requestPost(url, stage, params, client, "UTF-8", headers);
-    }
 
     protected JsonObject _postWithJson(String url, Enum stage, List<BasicNameValuePair> params, CloseableHttpClient client, Header... headers) throws Exception {
-        try{
+        try {
             return _getJsonMap(requestPost(url, stage, params, client, "UTF-8", headers));
-        }catch (Exception e) {
+        } catch (Exception e) {
             return null;
         }
     }
@@ -163,7 +155,7 @@ public class Helpers {
         return phoneNumber.substring(0, pos) + RandomStringUtils.randomAlphabetic(2) + phoneNumber.substring(pos);
     }
 
-    static String getRandomEmail(){
+    static String getRandomEmail() {
         return RandomStringUtils.randomAlphanumeric(13) + "@mail.ru";
     }
 }
