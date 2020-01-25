@@ -47,7 +47,10 @@ public class Helpers {
             httpPost.setHeaders(headers);
         }
         httpPost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
-        if (printHeaders) _printHeaders(httpPost.getAllHeaders(), stage, true);
+        if (printHeaders){
+            _printHeaders(httpPost.getAllHeaders(), stage, true);
+            System.out.println(params);
+        }
         try (CloseableHttpResponse response = client.execute(httpPost)) {
             HttpEntity entity = response.getEntity();
             entityString = IOUtils.toString(entity.getContent(), encoding);

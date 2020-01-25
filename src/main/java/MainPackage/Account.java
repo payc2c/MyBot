@@ -13,6 +13,11 @@ public class Account {
     public void setRandomLogin() {
         this.randomLogin = Helpers.randomiseLogin(login);
     }
+    public Account(String email, String password){
+        this.email = email;
+        this.password = password;
+        this.login = null;
+    }
 
     public Account(String email, String password, String login) {
         this.email = email;
