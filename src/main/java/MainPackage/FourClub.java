@@ -21,6 +21,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 import static MainPackage.Stages.FOUR_CLUB.*;
@@ -29,7 +30,6 @@ public class FourClub extends Helpers {
     private static final String[] INITIAL_HEADERS = {"Host: www.4club.com", "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:67.0) Gecko/20100101 Firefox/67.0", "Accept: application/json, " +
             "text/javascript, */*; q=0.01", "Accept-Language: en-GB,en;q=0.5", "Accept-Encoding: gzip, deflate, br", "X-Requested-With: XMLHttpRequest", "Connection: keep-alive", "Pragma: no-cache", "Cache-Control: no-cache"};
     private List<BasicHeader> HEADERS;
-
     final private Account account;
     private CookieStore cookieStore = new BasicCookieStore();
     private Set<String> idSet = new HashSet<>();
@@ -57,7 +57,7 @@ public class FourClub extends Helpers {
     public FourClub(Account account) {
         this.account = account;
         HEADERS = new ArrayList<>(Arrays.asList(_toHeader(INITIAL_HEADERS)));
-        _setPrintHeaders(true);
+        _setPrintHeaders(false);
         _setApacheLogs(false);
 
     }
@@ -96,26 +96,43 @@ public class FourClub extends Helpers {
         return null;
     }
 
-    Account run() {
+    Account run(AtomicLong counter) throws Exception {
         try (CloseableHttpClient httpClient = HttpClients.custom().setDefaultHeaders(HEADERS).setDefaultCookieStore(cookieStore).build()) {
             requestGet(HOME.getURL(), HOME, httpClient);
-            if (checkSuc(_postWithJson(LOGIN.getURL(), LOGIN, loginLoad(account.getEmail(), account.getPassword()), httpClient))) {
+            String loginResponse;
+            try {
+                loginResponse = requestPost(LOGIN.getURL(), LOGIN, loginLoad(account.getEmail(), account.getPassword()), httpClient);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+            if (loginResponse.contains("BANNED")) return account.setHasError(true);
+            if (loginResponse != null && checkSuc(new Gson().fromJson(loginResponse, JsonObject.class))) {
 
                 requestGet(MY_PROFILE.getURL(), MY_PROFILE, httpClient);
 
             /*for (String city : cities.split("\\n")) {
                 extractIds(_postWithJson(ONLINE_LIST.getURL(), ONLINE_LIST, onlineSearchLoad(city.trim().split("\\|")), httpClient));
             }*/
-                extractIds(_postWithJson(ONLINE_LIST.getURL(), ONLINE_LIST, onlineSearchLoad(cities.split("\\n")[0].trim().split("\\|")), httpClient));
+                extractIds(_postWithJson(ONLINE_LIST.getURL(), ONLINE_LIST, onlineSearchLoad(), httpClient));
                 int i = 0;
                 for (String id : idSet) {
-                    checkSuc(_postWithJson(SEND_MESSAGE.getURL(), SEND_MESSAGE, messageLoad(id), httpClient, new BasicHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")));
-                    if (i++ > 20) break;
+                    checkSuc(_postWithJson(SEND_MESSAGE.getURL(), SEND_MESSAGE, messageLoad(id),
+                            httpClient, new BasicHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")));
+                    counter.incrementAndGet();
+                    if (++i % 10 == 0) System.out.printf("Thread No: %d, City: %s, Count: %d\n"
+                            , Thread.currentThread().getId() % 19, account.getCity().getName(), i);
+                    Thread.sleep(2500);
+                    //if (i++ > 20) break;
                 }
-                System.out.println(idSet);
                 System.out.println(idSet.size());
-            } else throw new StageException("Login Failed", LOGIN);
+            } else {
+                StageException stageException = new StageException(loginResponse != null ? loginResponse : "Null response", LOGIN, account).writeLogs();
+                throw stageException;
+            }
         } catch (Exception e) {
+            if (e instanceof StageException) throw e;
             e.printStackTrace();
         }
         return account;
@@ -182,14 +199,14 @@ public class FourClub extends Helpers {
                 .addTextBody("title", payload)
                 .build();
         post.setEntity(entity);
-        _printHeaders(post.getAllHeaders(), stage, true);
+        _printHeaders(post.getAllHeaders(), UPLOAD_PHOTO, true);
 
         try (CloseableHttpResponse response = client.execute(post)) {
             System.out.println(response.getStatusLine());
             entity = response.getEntity();
             entityString = IOUtils.toString(entity.getContent(), encoding);
-            _printHeaders(response.getAllHeaders(), stage, false);
-            _writeFile(entityString, stage, encoding);
+            _printHeaders(response.getAllHeaders(), UPLOAD_PHOTO, false);
+            _writeFile(entityString, UPLOAD_PHOTO, encoding);
             EntityUtils.consume(entity);
         }
         return entityString;
@@ -231,7 +248,7 @@ public class FourClub extends Helpers {
     Krasnodar (Krasnodarskiy)|243292|38
     Tolyatti (Samara)|49617|65
      */
-    private List<BasicNameValuePair> onlineSearchLoad(String[] city) {
+    private List<BasicNameValuePair> onlineSearchLoad() {
         List<BasicNameValuePair> load = new ArrayList<>();
 
         load.add(new BasicNameValuePair("type", "base"));
@@ -240,8 +257,8 @@ public class FourClub extends Helpers {
         load.add(new BasicNameValuePair("ageFrom", "18"));
         load.add(new BasicNameValuePair("ageTo", "90"));
         load.add(new BasicNameValuePair("country", "RU"));
-        load.add(new BasicNameValuePair("city", city[0].trim()));
-        load.add(new BasicNameValuePair("cityId", city[1].trim()));
+        load.add(new BasicNameValuePair("city", account.getCity().getName().trim()));
+        load.add(new BasicNameValuePair("cityId", account.getCity().getCode().trim()));
         load.add(new BasicNameValuePair("online", "1"));
         load.add(new BasicNameValuePair("hasPhoto", ""));
         load.add(new BasicNameValuePair("videoChat", ""));
@@ -259,41 +276,11 @@ public class FourClub extends Helpers {
     }
 
     private List<BasicNameValuePair> messageLoad(String id) throws Exception {
-        String load = "Карма Сука";
+        String load = "Привет убери буковки из ника и напиши. За услуги договоримся, обижен не будешь, Дашулька";
 // mock id 102098638
         List<BasicNameValuePair> list = new ArrayList<>();
         list.add(new BasicNameValuePair("userid", id));
         list.add(new BasicNameValuePair("message", load));
         return list;
-    }
-
-    enum Stages {
-        HOME("https://www.4club.com"),
-        REGISTER("https://www.4club.com/register"),
-        LOGIN("https://www.4club.com/login"),
-        SET_PROFILE("https://www.4club.com/myprofile/save"),
-        MY_PROFILE("https://www.4club.com/myprofile"),
-        PHOTO("https://www.4club.com/popup/uploadmedia/photo"),
-        ONLINE_LIST("https://www.4club.com/search/result/online"),
-        UPLOAD_PHOTO("https://www.4club.com/media/uploadphoto"),
-        MESSAGES("https://www.yoursex.ru/messages.html"),
-        SEND_MESSAGE("https://www.4club.com/message/send"),
-        NEW_FACES("https://www.4club.com/search/result/newfaces"),
-        SPAMMED_ID_SET("");
-
-        private String URL;
-
-        Stages(final String URL) {
-            this.URL = URL;
-        }
-
-        private String getURL() {
-            return URL;
-        }
-
-        @Override
-        public String toString() {
-            return this.name() + ".html";
-        }
     }
 }

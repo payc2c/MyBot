@@ -22,7 +22,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.*;
 
 public class Helpers {
     private static boolean printHeaders = false;
@@ -47,7 +46,7 @@ public class Helpers {
             httpPost.setHeaders(headers);
         }
         httpPost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
-        if (printHeaders){
+        if (printHeaders) {
             _printHeaders(httpPost.getAllHeaders(), stage, true);
             System.out.println(params);
         }
@@ -62,6 +61,16 @@ public class Helpers {
         return entityString;
     }
 
+    /**
+     * requestPost with default UTF-8 encoding
+     *
+     * @return String response
+     * @throws Exception
+     */
+    protected String requestPost(String url, Enum stage, List<BasicNameValuePair> params, CloseableHttpClient client,
+                                 Header... headers) throws Exception {
+        return requestPost(url, stage, params, client, "UTF-8", headers);
+    }
 
     protected JsonObject _postWithJson(String url, Enum stage, List<BasicNameValuePair> params, CloseableHttpClient client, Header... headers) throws Exception {
         try {

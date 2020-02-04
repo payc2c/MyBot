@@ -7,54 +7,76 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 public class Main extends Helpers {
-    private static final String cities = " Moscow|187219|\n" +
-            "(Sankt-Peterburg)|100787|66\n" +
-            "Novosibirsk (Novosibirsk)|495117|53\n" +
-            "Yekaterinburg (Sverdlovsk)|463211|71\n" +
-            "Novgorod (Novgorod)|168511|52\n" +
-            "Samara (Samara)|101664|65\n" +
-            "Omsk (Omsk)|492924|54\n" +
-            "Kazan (Tatarstan)|272141|73\n" +
-            "Chelyabinsk (Tsjeljabinsk)|532314|13\n" +
-            "Rostov-na-Donu (Rostov)|108520|61\n" +
-            "Ufa (Perm)|852336|90\n" +
-            "Volgograd (Volgograd)|27848|84\n" +
-            "Perm’ (Perm)|141178|90\n" +
-            "Krasnoyarsk (Krasnoyarskiy)|512514|91\n" +
-            "Voronezh (Voronezj)|26161|86\n" +
-            "Saratov (Saratov)|100297|67\n" +
-            "Krasnodar (Krasnodarskiy)|243292|38\n" +
-            "Tolyatti (Samara)|49617|65\n" +
-            "Vladivostok (Primorskiy)|565470|59\n" +
-            "Russian Federation|855784|00";
+    private static final String cities = " Moscow|187219|1\n" +
+            "Sankt-Peterburg|100787|66\n" +
+            "Novosibirsk|495117|53\n" +
+            "Yekaterinburg|463211|71\n" +
+            "Novgorod|168511|52\n" +
+            "Samara|101664|65\n" +
+            "Omsk|492924|54\n" +
+            "Kazan|272141|73\n" +
+            "Chelyabinsk|532314|13\n" +
+            "Rostov-na-Donu|108520|61\n" +
+            "Ufa|852336|90\n" +
+            "Volgograd|27848|84\n" +
+            "Perm’|141178|90\n" +
+            "Krasnoyarsk|512514|91\n" +
+            "Voronezh|26161|86\n" +
+            "Saratov|100297|67\n" +
+            "Krasnodar|243292|38\n" +
+            "Tolyatti|49617|65\n" +
+            "Vladivostok|565470|59";
 
-    private void runParallel(boolean fromFile, int threads, String phone) {
-        if (fromFile) {
+    private AtomicLong counter = new AtomicLong(0);
 
-        }
-
+    private synchronized boolean runParallel(boolean fromFile, int threads, String phone) {
         int maxThreads = 20;
         List<Callable<Account>> tasks = new ArrayList<>();
+        List<Account> accounts = new ArrayList<>();
         Path path = Paths.get(String.format("%s/logs/Emails", System.getProperty("user.dir")));
         path = Paths.get(path + "/" + "EmailList" + phone + ".txt");
+        List<City> cities = Arrays.stream(this.cities.split("\\n")).map(c -> c.split("\\|"))
+                .map(c -> new City(c[0], c[1], c[2])).collect(Collectors.toList());
+
+        if (fromFile) {
+            if (Files.notExists(path)) registerAccsParallel(20, phone);
+            try {
+                accounts = Files.readAllLines(path).stream().map(s -> s.split(":"))
+                        .map(s -> new Account(s[0], s[1])).collect(Collectors.toList());
+                if (accounts.size() < threads) {
+                    registerAccsParallel(accounts.size() - threads, phone);
+                    return false;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
         ExecutorService taskExecutor = Executors.newFixedThreadPool(threads > maxThreads ? maxThreads : threads);
         CompletionService<Account> taskCompletionService = new ExecutorCompletionService<>(taskExecutor);
         try {
-            List<Account> list = Files.readAllLines(path).stream().map(s -> s.split(":")).map(s -> new Account(s[0], s[1])).collect(Collectors.toList());
             for (int i = 0; i < threads; i++) {
-                makeCallableForRunning(taskCompletionService, list.get(i));
+                makeCallableForRunning(taskCompletionService, accounts.get(i).setCity(cities.get(i)));
             }
             while (!taskExecutor.isTerminated()) {
-                Account account = taskCompletionService.take().get();
+                Future<Account> future = taskCompletionService.take();
+                Account account = future.get();
+                System.out.println(account.toString());
+                taskExecutor.shutdown();
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            taskExecutor.shutdownNow();
+            System.out.println(counter.get() + "___________Accs Spammed");
+            return true;
         }
     }
 
@@ -117,9 +139,9 @@ public class Main extends Helpers {
     private void makeCallableForRunning(CompletionService<Account> completionService, Account account) {
         Callable<Account> callable = () -> {
             FourClub club = new FourClub(account);
-            Thread.sleep(1000);
-            return club.run();
+            return club.run(counter);
         };
+        completionService.submit(callable);
     }
 
     private void makeCallableForRegistration(CompletionService<Account> completionService, String phoneLogin) {
@@ -145,24 +167,28 @@ public class Main extends Helpers {
     private void writeList(List<Account> list, Path path) {
         try {
             if (!Files.exists(path.getParent())) Files.createDirectories(path.getParent());
-            Files.write(path, list.stream().map(account -> account.getEmail() + ":" + account.getPassword()).collect(Collectors.joining("\n")).getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+            Files.write(path, list.stream().map(account -> account.getEmail() + ":"
+                            + account.getPassword()).collect(Collectors.joining("\n")).getBytes(),
+                    StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public static void main(String[] args) throws Exception {
-        //Illya 9774933968
+        //Illya 9774020155
         //Andrey 9774020160
-        String phoneLogin = "9774020155";
+        AtomicLong counter = new AtomicLong(0);
+        String phoneLogin = "9855015930";
         String username = "yolicex@click-email.com";
         Main main = new Main();
      /*   YourSex yoursex = new YourSex(username, password);
         yoursex.run();*/
         long time = System.currentTimeMillis();
-        //main.registerAccsParallel(100, phoneLogin);
-        FourClub four = new FourClub(new Account("MfkC1LBtuYPWm@mail.ru", "UsHCt5W07f"));
-        four.run();
+        FourClub four = new FourClub(new Account("KsNajnDHdQCzZ@mail.ru", "FE6NatbWbP"));
+        // main.registerAccsParallel(100, phoneLogin);
+        while (!main.runParallel(true, 19, "9774020155")) ;
+
         System.out.println("SUPER SUC !!!!! _________________________________________________" + (System.currentTimeMillis() - time));
 
     }
