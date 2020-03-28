@@ -26,9 +26,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static MainPackage.YourSex.Stages.*;
-/*
-sdfsd
- */
+
 public class YourSex extends Helpers {
     private static final String[] INITIAL_HEADERS = {"Origin: https://www.yoursex.ru", "Referer: https://www.yoursex.ru/", "Connection: keep-alive", "Upgrade-Insecure-Requests: 1", "User-Agent: Mozilla/5.0",
             "Accept: text/html"};
