@@ -117,7 +117,7 @@ public class Helpers {
         return new Gson().fromJson(json, JsonObject.class);
     }
 
-    static void _writeFile(String response, Enum fileName, String encoding) throws Exception {
+    static synchronized void _writeFile(String response, Enum fileName, String encoding) throws Exception {
         Path path = Paths.get(String.format("%s/logs/%s", System.getProperty("user.dir"), fileName.getDeclaringClass().getName().split("\\.")[1].replace("$", "")));
         Files.createDirectories(path);
         path = Paths.get(path + "/" + fileName.toString());
@@ -163,11 +163,23 @@ public class Helpers {
     }
 
     static String randomiseLogin(String phoneNumber) {
-        int pos = (int) ((Math.random() * (8 - 3)) + 3);
-        return phoneNumber.substring(0, pos) + RandomStringUtils.randomAlphabetic(2) + phoneNumber.substring(pos);
+        String random1 = RandomStringUtils.randomAlphabetic(1);
+        String random2 = RandomStringUtils.randomAlphabetic(1);
+        int pos1 = (int) (Math.random() * 10);
+        String first = phoneNumber.substring(0, pos1);
+        String last = phoneNumber.substring(pos1);
+        String toSplit = first.length() > last.length() ? first : last;
+        int length = toSplit.length();
+        int offset = length > 7 ? length % 7 : 0;
+        int pos2 = (int) ((Math.random() * (length - offset)) + offset);
+        if (first.length() > last.length()) {
+            return first.substring(0, pos2) + random1 + first.substring(pos2) + random2 + last;
+        } else {
+            return first + random1 + last.substring(0, pos2) + random2 + last.substring(pos2);
+        }
     }
 
     static String getRandomEmail() {
-        return RandomStringUtils.randomAlphanumeric(13) + "@mail.ru";
+        return RandomStringUtils.randomAlphanumeric(7).toLowerCase() + "@gmail.com";
     }
 }

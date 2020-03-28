@@ -2,9 +2,9 @@ package MainPackage;
 
 public final class City {
     private String name;
-
     private String code;
     private String anotherCode;
+
     public City(String name, String code, String anotherCode) {
         this.name = name;
         this.code = code;

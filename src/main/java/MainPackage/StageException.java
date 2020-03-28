@@ -37,11 +37,11 @@ public class StageException extends Exception {
         }
         if (pathList.stream().anyMatch(p -> Files.isRegularFile(p))) {
             count = pathList.stream()
-                    .map(p -> p.getFileName().toString().split("_")[2].split("\\.")[0])
+                    .map(p -> p.getFileName().toString().split("_")[1].split("\\.")[0])
                     .mapToInt(Integer::parseInt).max().getAsInt();
 
         }
-        path = Paths.get(String.format("%s/LogNo_%s_%d_%s.txt", path, stage.name(), (count + 1),
+        path = Paths.get(String.format("%s/N_%d_%s_%s.txt", path, count+1, stage.name(),
                 account.getLogin() != null ? account.getLogin() : account.getEmail()));
         try {
             Files.writeString(path, message, StandardOpenOption.CREATE, StandardOpenOption.APPEND);

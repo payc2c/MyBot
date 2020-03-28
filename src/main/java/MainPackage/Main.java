@@ -36,10 +36,11 @@ public class Main extends Helpers {
 
     private AtomicLong counter = new AtomicLong(0);
 
-    private synchronized boolean runParallel(boolean fromFile, int threads, String phone) {
+    private synchronized boolean runParallel(boolean fromFile, int threads, String phone, int delay) {
         int maxThreads = 20;
-        List<Callable<Account>> tasks = new ArrayList<>();
+        List<Future> futures = new ArrayList<>();
         List<Account> accounts = new ArrayList<>();
+        List<Account> accountsInUse = new ArrayList<>();
         Path path = Paths.get(String.format("%s/logs/Emails", System.getProperty("user.dir")));
         path = Paths.get(path + "/" + "EmailList" + phone + ".txt");
         List<City> cities = Arrays.stream(this.cities.split("\\n")).map(c -> c.split("\\|"))
@@ -51,7 +52,7 @@ public class Main extends Helpers {
                 accounts = Files.readAllLines(path).stream().map(s -> s.split(":"))
                         .map(s -> new Account(s[0], s[1])).collect(Collectors.toList());
                 if (accounts.size() < threads) {
-                    registerAccsParallel(accounts.size() - threads, phone);
+                    registerAccsParallel(threads - accounts.size() + 1, phone);
                     return false;
                 }
             } catch (Exception e) {
@@ -63,24 +64,47 @@ public class Main extends Helpers {
         CompletionService<Account> taskCompletionService = new ExecutorCompletionService<>(taskExecutor);
         try {
             for (int i = 0; i < threads; i++) {
-                makeCallableForRunning(taskCompletionService, accounts.get(i).setCity(cities.get(i)));
+                Account ac = accounts.get(0);
+                makeCallableForRunning(taskCompletionService, ac.setCity(cities.get(i)), delay);
+                accountsInUse.add(ac);
+                accounts.remove(ac);
             }
             while (!taskExecutor.isTerminated()) {
                 Future<Account> future = taskCompletionService.take();
+                futures.add(future);
                 Account account = future.get();
-                System.out.println(account.toString());
-                taskExecutor.shutdown();
+                if (account.hasError()) {
+                    accountsInUse.remove(account);
+                    account = accounts.size() > 0 ? accounts.get(0).setCity(account.getCity()) :
+                            registerAccs(1, phone).get(0).setCity(account.getCity());
+                    accounts.remove(account);
+                    accountsInUse.add(account);
+                    makeCallableForRunning(taskCompletionService, account, delay);
+                    continue;
+                }
+                if (!account.hasError()) {
+                    accountsInUse.remove(account);
+
+                    accounts.add(account);
+                    if (accountsInUse.isEmpty()) {
+                        taskExecutor.shutdown();
+                        break;
+                    }
+                    continue;
+                }
             }
+            taskExecutor.shutdown();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             taskExecutor.shutdownNow();
+            writeList(accounts, path);
             System.out.println(counter.get() + "___________Accs Spammed");
-            return true;
         }
+        return true;
     }
 
-    private synchronized List<Account> registerAccsParallel(int accNum, String phoneLogin) {
+    protected synchronized List<Account> registerAccsParallel(int accNum, String phoneLogin) {
         int maxThreads = 20;
         List<Account> list = new ArrayList<>();
         List<Callable<Account>> tasks = new ArrayList<>();
@@ -91,12 +115,13 @@ public class Main extends Helpers {
         try {
 
             for (int i = 0; i < accNum; i++) {
-                makeCallableForRegistration(taskCompletionService, phoneLogin);
+                submitCallableForRegistration(taskCompletionService, phoneLogin);
+                Thread.sleep(500);
             }
             while (!taskExecutor.isTerminated()) {
                 Account account = taskCompletionService.take().get();
                 if (account == null || account.isNull()) {
-                    makeCallableForRegistration(taskCompletionService, phoneLogin);
+                    submitCallableForRegistration(taskCompletionService, phoneLogin);
                     continue;
                 }
                 list.add(checkNullAndWrite(account, path));
@@ -114,7 +139,7 @@ public class Main extends Helpers {
         }
     }
 
-    private List<Account> regiserAccs(int accNum, String phoneLogin) {
+    private List<Account> registerAccs(int accNum, String phoneLogin) {
         List<Account> list = new ArrayList<>();
         try {
             Path path = Paths.get(String.format("%s/logs/Emails", System.getProperty("user.dir")));
@@ -136,15 +161,15 @@ public class Main extends Helpers {
         return list;
     }
 
-    private void makeCallableForRunning(CompletionService<Account> completionService, Account account) {
+    private void makeCallableForRunning(CompletionService<Account> completionService, Account account, int delay) {
         Callable<Account> callable = () -> {
             FourClub club = new FourClub(account);
-            return club.run(counter);
+            return club.run(counter, delay);
         };
         completionService.submit(callable);
     }
 
-    private void makeCallableForRegistration(CompletionService<Account> completionService, String phoneLogin) {
+    private void submitCallableForRegistration(CompletionService<Account> completionService, String phoneLogin) {
         String password = RandomStringUtils.randomAlphanumeric(10);
         Callable<Account> callable = () -> {
             FourClub club = new FourClub(new Account(Helpers.getRandomEmail(), password, phoneLogin));
@@ -156,7 +181,7 @@ public class Main extends Helpers {
     }
 
     private synchronized Account checkNullAndWrite(Account account, Path path) throws Exception {
-        if (account.isNotNull()) {
+        if (account != null && account.isNotNull()) {
             if (!Files.exists(path.getParent())) Files.createDirectories(path.getParent());
             Files.write(path, (account.getEmail() + ":" + account.getPassword() + "\n").getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
             return account;
@@ -175,21 +200,23 @@ public class Main extends Helpers {
         }
     }
 
-    public static void main(String[] args) throws Exception {
+    public static synchronized void main(String[] args) throws Exception {
         //Illya 9774020155
         //Andrey 9774020160
         AtomicLong counter = new AtomicLong(0);
-        String phoneLogin = "9855015930";
+        String phoneLogin = "9774020155";
         String username = "yolicex@click-email.com";
         Main main = new Main();
      /*   YourSex yoursex = new YourSex(username, password);
         yoursex.run();*/
         long time = System.currentTimeMillis();
         FourClub four = new FourClub(new Account("KsNajnDHdQCzZ@mail.ru", "FE6NatbWbP"));
-        // main.registerAccsParallel(100, phoneLogin);
-        while (!main.runParallel(true, 19, "9774020155")) ;
-
-        System.out.println("SUPER SUC !!!!! _________________________________________________" + (System.currentTimeMillis() - time));
-
+        //main.registerAccsParallel(200, phoneLogin);
+        int c = 0;
+        while (true) {
+            while (!main.runParallel(true, 19, "9774020155", 1750)) ;
+            System.out.println("Spamming try n " + (c++));
+            Thread.sleep(60 * 1000);
+        }
     }
 }

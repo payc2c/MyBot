@@ -1,12 +1,14 @@
 package MainPackage;
 
+import java.util.Objects;
+
 public class Account {
     final private String email;
     final private String password;
     final private String login;
     private String randomLogin;
     private City city;
-    private boolean hasError;
+    private boolean hasError = false;
 
     public String getRandomLogin() {
         return randomLogin;
@@ -40,7 +42,7 @@ public class Account {
     @Override
     public String toString() {
         return String.format("Email: %s, Password: %s, Login: %s, City: %s, Banned: %s",
-                email, password, String.valueOf(login), String.valueOf(city.getName()), hasError);
+                email, password, String.valueOf(login), city != null ? String.valueOf(city.getName()) : "null", hasError);
     }
 
     public City getCity() {
@@ -71,5 +73,19 @@ public class Account {
     public Account setHasError(boolean hasError) {
         this.hasError = hasError;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Account account = (Account) o;
+        return email.equals(account.email) &&
+                password.equals(account.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(email, password);
     }
 }

@@ -15,7 +15,7 @@ public class SQLiteJDBCDriverConnection {
                 "VALUE int NOT NULL UNIQUE);";
         try {
             // db parameters
-            String url = "jdbc:sqlite:test.db";
+            String url = "jdbc:sqlite:MainPackage.test.db";
             // create a connection to the database
             conn = DriverManager.getConnection(url);
             Statement statement = conn.createStatement();
